@@ -23,7 +23,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "role", catalog = "idm", uniqueConstraints = @UniqueConstraint(columnNames = {"NAME",
     "ENTERPRISE_CODE"}))
-public class Role implements java.io.Serializable {
+public class RoleEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -71,16 +71,16 @@ public class Role implements java.io.Serializable {
     /**
      * User roles.
      */
-    private Set<UserRoles> userRoles = new HashSet(0);
+    private Set<UserRolesEntity> userRoleEntities = new HashSet(0);
     /**
      * Role permissions.
      */
-    private Set<RolePermissions> rolePermissions = new HashSet(0);
+    private Set<RolePermissionsEntity> rolePermissionEntities = new HashSet(0);
 
     /**
      * Parameter less constructor for role entity.
      */
-    public Role() {
+    public RoleEntity() {
     }
 
     /**
@@ -92,22 +92,22 @@ public class Role implements java.io.Serializable {
      * @param enterpriseCode  enterpriseCode
      * @param createDate      createDate
      * @param lastUpdateDate  lastUpdateDate
-     * @param userRoles       userRoleses
-     * @param rolePermissions rolePermissions
+     * @param userRoleEntities       userRoleses
+     * @param rolePermissionEntities rolePermissions
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public Role(String name, String description, Character status, String enterpriseCode,
-                Date createDate,
-                Date lastUpdateDate, Set<UserRoles> userRoles,
-                Set<RolePermissions> rolePermissions) {
+    public RoleEntity(String name, String description, Character status, String enterpriseCode,
+                      Date createDate,
+                      Date lastUpdateDate, Set<UserRolesEntity> userRoleEntities,
+                      Set<RolePermissionsEntity> rolePermissionEntities) {
         this.name = name;
         this.description = description;
         this.status = status;
         this.enterpriseCode = enterpriseCode;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
-        this.userRoles = userRoles;
-        this.rolePermissions = this.rolePermissions;
+        this.userRoleEntities = userRoleEntities;
+        this.rolePermissionEntities = this.rolePermissionEntities;
     }
 
     /**
@@ -253,17 +253,17 @@ public class Role implements java.io.Serializable {
      * @return user roles
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
-    public Set<UserRoles> getUserRoles() {
-        return this.userRoles;
+    public Set<UserRolesEntity> getUserRoleEntities() {
+        return this.userRoleEntities;
     }
 
     /**
      * Set user roles.
      *
-     * @param userRoles user roles.
+     * @param userRoleEntities user roles.
      */
-    public void setUserRoles(Set<UserRoles> userRoles) {
-        this.userRoles = userRoles;
+    public void setUserRoleEntities(Set<UserRolesEntity> userRoleEntities) {
+        this.userRoleEntities = userRoleEntities;
     }
 
     /**
@@ -272,17 +272,17 @@ public class Role implements java.io.Serializable {
      * @return role permissions
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
-    public Set<RolePermissions> getRolePermissions() {
-        return this.rolePermissions;
+    public Set<RolePermissionsEntity> getRolePermissionEntities() {
+        return this.rolePermissionEntities;
     }
 
     /**
      * Set role permissions.
      *
-     * @param rolePermissions role permissions
+     * @param rolePermissionEntities role permissions
      */
-    public void setRolePermissions(Set<RolePermissions> rolePermissions) {
-        this.rolePermissions = rolePermissions;
+    public void setRolePermissionEntities(Set<RolePermissionsEntity> rolePermissionEntities) {
+        this.rolePermissionEntities = rolePermissionEntities;
     }
 
 }

@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "enterprise", catalog = "idm")
-public class Enterprise implements java.io.Serializable {
+public class EnterpriseEntity implements java.io.Serializable {
     /**
      * Size for string field.
      */
@@ -64,12 +64,12 @@ public class Enterprise implements java.io.Serializable {
     /**
      * Addresses for the enterprise.
      */
-    private Set<Address> addresses = new HashSet(0);
+    private Set<AddressEntity> addressEntities = new HashSet(0);
 
     /**
      * Parameter less constructor.
      */
-    public Enterprise() {
+    public EnterpriseEntity() {
     }
 
     /**
@@ -79,7 +79,7 @@ public class Enterprise implements java.io.Serializable {
      * @param createDate     createDate
      * @param lastUpdateDate lastUpdateDate
      */
-    public Enterprise(int enterpriseType, Date createDate, Date lastUpdateDate) {
+    public EnterpriseEntity(int enterpriseType, Date createDate, Date lastUpdateDate) {
         this.enterpriseType = enterpriseType;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
@@ -94,18 +94,18 @@ public class Enterprise implements java.io.Serializable {
      * @param enterpriseType enterprise type
      * @param createDate     created date
      * @param lastUpdateDate last updated date
-     * @param addresses      address
+     * @param addressEntities      address
      */
-    public Enterprise(String name, Character status, String enterpriseCode, int enterpriseType,
-                      Date createDate,
-                      Date lastUpdateDate, Set<Address> addresses) {
+    public EnterpriseEntity(String name, Character status, String enterpriseCode, int enterpriseType,
+                            Date createDate,
+                            Date lastUpdateDate, Set<AddressEntity> addressEntities) {
         this.name = name;
         this.status = status;
         this.enterpriseCode = enterpriseCode;
         this.enterpriseType = enterpriseType;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
-        this.addresses = addresses;
+        this.addressEntities = addressEntities;
     }
 
     /**
@@ -251,17 +251,17 @@ public class Enterprise implements java.io.Serializable {
      * @return list of address.
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "enterprise")
-    public Set<Address> getAddresses() {
-        return this.addresses;
+    public Set<AddressEntity> getAddressEntities() {
+        return this.addressEntities;
     }
 
     /**
      * Set the address to the Enterprise.
      *
-     * @param addresses addresses
+     * @param addressEntities addresses
      */
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
+    public void setAddressEntities(Set<AddressEntity> addressEntities) {
+        this.addressEntities = addressEntities;
     }
 
 }

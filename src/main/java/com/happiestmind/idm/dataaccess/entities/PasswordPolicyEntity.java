@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "password_policy", catalog = "idm")
-public class PasswordPolicy implements java.io.Serializable {
+public class PasswordPolicyEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -74,7 +74,7 @@ public class PasswordPolicy implements java.io.Serializable {
     /**
      * Parameter less constructor for Password policy.
      */
-    public PasswordPolicy() {
+    public PasswordPolicyEntity() {
     }
 
     /**
@@ -85,8 +85,8 @@ public class PasswordPolicy implements java.io.Serializable {
      * @param createDate     createDate
      * @param lastUpdateDate lastUpdateDate
      */
-    public PasswordPolicy(String enterpriseCode, String policyName, Date createDate,
-                          Date lastUpdateDate) {
+    public PasswordPolicyEntity(String enterpriseCode, String policyName, Date createDate,
+                                Date lastUpdateDate) {
         this.enterpriseCode = enterpriseCode;
         this.policyName = policyName;
         this.createDate = createDate;
@@ -104,10 +104,10 @@ public class PasswordPolicy implements java.io.Serializable {
      * @param lastUpdateDate      lastUpdateDate
      * @param passwordPolicyAttrs passwordPolicyAttrs
      */
-    public PasswordPolicy(String enterpriseCode, String policyName, String description,
-                          Character status,
-                          Date createDate, Date lastUpdateDate,
-                          Set<PasswordPolicyAttr> passwordPolicyAttrs) {
+    public PasswordPolicyEntity(String enterpriseCode, String policyName, String description,
+                                Character status,
+                                Date createDate, Date lastUpdateDate,
+                                Set<PasswordPolicyAttr> passwordPolicyAttrs) {
         this.enterpriseCode = enterpriseCode;
         this.policyName = policyName;
         this.description = description;

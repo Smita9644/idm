@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 @SuppressWarnings("checkstyle:MethodCount")
 @Entity
 @Table(name = "user", catalog = "idm")
-public class User implements java.io.Serializable {
+public class UserEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -114,11 +114,11 @@ public class User implements java.io.Serializable {
     /**
      * USer roles.
      */
-    private Set<UserRoles> userRoles = new HashSet(0);
+    private Set<UserRolesEntity> userRoleEntities = new HashSet(0);
     /**
      * User password hist.
      */
-    private Set<UserPasswdHist> userPasswdHists = new HashSet(0);
+    private Set<UserPasswdHistEntity> userPasswdHistEntities = new HashSet(0);
     /**
      * USer activation key.
      */
@@ -127,7 +127,7 @@ public class User implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public User() {
+    public UserEntity() {
     }
 
     /**
@@ -141,9 +141,9 @@ public class User implements java.io.Serializable {
      * @param lastUpdateDate last update date
      * @param name           name
      */
-    public User(String username, String emailId, String enterpriseCode, int userType,
-                Date createDate,
-                Date lastUpdateDate, String name) {
+    public UserEntity(String username, String emailId, String enterpriseCode, int userType,
+                      Date createDate,
+                      Date lastUpdateDate, String name) {
         this.username = username;
         this.emailId = emailId;
         this.enterpriseCode = enterpriseCode;
@@ -172,18 +172,18 @@ public class User implements java.io.Serializable {
      * @param lastUpdateDate     last update date
      * @param lastLoginDate      last login time
      * @param name               name
-     * @param userRoles          user roles
-     * @param userPasswdHists    user password hist
+     * @param userRoleEntities          user roles
+     * @param userPasswdHistEntities    user password hist
      * @param userActivationKeys user activation key
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public User(String username, String emailId, String password, String salt, Date passwdCreated,
-                Boolean changePasswd,
-                Integer loginFailCount, Boolean emailVerified, String enterpriseCode,
-                Character status, int userType,
-                Date passwordExpiry, Date createDate, Date lastUpdateDate, Date lastLoginDate,
-                String name, Set<UserRoles> userRoles,
-                Set<UserPasswdHist> userPasswdHists, Set<UserActivationKey> userActivationKeys) {
+    public UserEntity(String username, String emailId, String password, String salt, Date passwdCreated,
+                      Boolean changePasswd,
+                      Integer loginFailCount, Boolean emailVerified, String enterpriseCode,
+                      Character status, int userType,
+                      Date passwordExpiry, Date createDate, Date lastUpdateDate, Date lastLoginDate,
+                      String name, Set<UserRolesEntity> userRoleEntities,
+                      Set<UserPasswdHistEntity> userPasswdHistEntities, Set<UserActivationKey> userActivationKeys) {
         this.username = username;
         this.emailId = emailId;
         this.password = password;
@@ -200,8 +200,8 @@ public class User implements java.io.Serializable {
         this.lastUpdateDate = lastUpdateDate;
         this.lastLoginDate = lastLoginDate;
         this.name = name;
-        this.userRoles = userRoles;
-        this.userPasswdHists = userPasswdHists;
+        this.userRoleEntities = userRoleEntities;
+        this.userPasswdHistEntities = userPasswdHistEntities;
         this.userActivationKeys = userActivationKeys;
     }
 
@@ -541,17 +541,17 @@ public class User implements java.io.Serializable {
      * @return user roles
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    public Set<UserRoles> getUserRoles() {
-        return this.userRoles;
+    public Set<UserRolesEntity> getUserRoleEntities() {
+        return this.userRoleEntities;
     }
 
     /**
      * Set user roles.
      *
-     * @param userRoles user roles
+     * @param userRoleEntities user roles
      */
-    public void setUserRoles(Set<UserRoles> userRoles) {
-        this.userRoles = userRoles;
+    public void setUserRoleEntities(Set<UserRolesEntity> userRoleEntities) {
+        this.userRoleEntities = userRoleEntities;
     }
 
     /**
@@ -560,17 +560,17 @@ public class User implements java.io.Serializable {
      * @return user password history
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    public Set<UserPasswdHist> getUserPasswdHists() {
-        return this.userPasswdHists;
+    public Set<UserPasswdHistEntity> getUserPasswdHistEntities() {
+        return this.userPasswdHistEntities;
     }
 
     /**
      * Set user password History.
      *
-     * @param userPasswdHists user password hist
+     * @param userPasswdHistEntities user password hist
      */
-    public void setUserPasswdHists(Set<UserPasswdHist> userPasswdHists) {
-        this.userPasswdHists = userPasswdHists;
+    public void setUserPasswdHistEntities(Set<UserPasswdHistEntity> userPasswdHistEntities) {
+        this.userPasswdHistEntities = userPasswdHistEntities;
     }
 
     /**

@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "permission", catalog = "idm")
-public class Permission implements java.io.Serializable {
+public class PermissionEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -69,12 +69,12 @@ public class Permission implements java.io.Serializable {
     /**
      * Role permissions.
      */
-    private Set<RolePermissions> rolePermissions = new HashSet(0);
+    private Set<RolePermissionsEntity> rolePermissionEntities = new HashSet(0);
 
     /**
      * Parameter less constructor.
      */
-    public Permission() {
+    public PermissionEntity() {
     }
 
     /**
@@ -87,12 +87,12 @@ public class Permission implements java.io.Serializable {
      * @param status          status
      * @param createDate      createDate
      * @param lastUpdateDate  lastUpdateDate
-     * @param rolePermissions rolePermissions
+     * @param rolePermissionEntities rolePermissions
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public Permission(String name, String description, String feature, int type, Character status,
-                      Date createDate,
-                      Date lastUpdateDate, Set<RolePermissions> rolePermissions) {
+    public PermissionEntity(String name, String description, String feature, int type, Character status,
+                            Date createDate,
+                            Date lastUpdateDate, Set<RolePermissionsEntity> rolePermissionEntities) {
         this.name = name;
         this.description = description;
         this.feature = feature;
@@ -100,7 +100,7 @@ public class Permission implements java.io.Serializable {
         this.status = status;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
-        this.rolePermissions = rolePermissions;
+        this.rolePermissionEntities = rolePermissionEntities;
     }
 
     /**
@@ -265,17 +265,17 @@ public class Permission implements java.io.Serializable {
      * @return role permissions
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "permission")
-    public Set<RolePermissions> getRolePermissions() {
-        return this.rolePermissions;
+    public Set<RolePermissionsEntity> getRolePermissionEntities() {
+        return this.rolePermissionEntities;
     }
 
     /**
      * Set role permissions.
      *
-     * @param rolePermissions rolePermissions
+     * @param rolePermissionEntities rolePermissions
      */
-    public void setRolePermissions(Set<RolePermissions> rolePermissions) {
-        this.rolePermissions = rolePermissions;
+    public void setRolePermissionEntities(Set<RolePermissionsEntity> rolePermissionEntities) {
+        this.rolePermissionEntities = rolePermissionEntities;
     }
 
 }

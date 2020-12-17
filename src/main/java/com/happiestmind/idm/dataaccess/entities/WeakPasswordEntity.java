@@ -1,43 +1,39 @@
 package com.happiestmind.idm.dataaccess.entities;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * RolePermissions Entity.
+ * WeakPassword Entity.
  */
 @Entity
-@Table(name = "role_permissions", catalog = "idm")
-public class RolePermissions implements java.io.Serializable {
+@Table(name = "weak_password", catalog = "idm")
+public class WeakPasswordEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
     public static final int NINETEEN = 19;
     /**
+     * Length of  value.
+     */
+    public static final int FIFTY = 50;
+    /**
      * Id.
      */
     private Long id;
     /**
-     * Permission.
+     * Value.
      */
-    private Permission permission;
-    /**
-     * Role.
-     */
-    private Role role;
+    private String value;
     /**
      * Create date.
      */
@@ -50,20 +46,18 @@ public class RolePermissions implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public RolePermissions() {
+    public WeakPasswordEntity() {
     }
 
     /**
-     * Parameterised constructor.
+     * Prameter less constructor.
      *
-     * @param permission     permission
-     * @param role           role
-     * @param createDate     created date
+     * @param value          value
+     * @param createDate     create Date.
      * @param lastUpdateDate last update date
      */
-    public RolePermissions(Permission permission, Role role, Date createDate, Date lastUpdateDate) {
-        this.permission = permission;
-        this.role = role;
+    public WeakPasswordEntity(String value, Date createDate, Date lastUpdateDate) {
+        this.value = value;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
     }
@@ -90,43 +84,22 @@ public class RolePermissions implements java.io.Serializable {
     }
 
     /**
-     * Get permissions.
+     * Get value.
      *
-     * @return permissions
+     * @return value
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERMISSION_ID", nullable = false)
-    public Permission getPermission() {
-        return this.permission;
+    @Column(name = "VALUE", nullable = false, length = FIFTY)
+    public String getValue() {
+        return this.value;
     }
 
     /**
-     * Set permissions.
+     * Set value.
      *
-     * @param permission permissions
+     * @param value value
      */
-    public void setPermission(Permission permission) {
-        this.permission = permission;
-    }
-
-    /**
-     * Get role.
-     *
-     * @return role
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ROLE_ID", nullable = false)
-    public Role getRole() {
-        return this.role;
-    }
-
-    /**
-     * Set role.
-     *
-     * @param role role
-     */
-    public void setRole(Role role) {
-        this.role = role;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     /**
@@ -150,9 +123,9 @@ public class RolePermissions implements java.io.Serializable {
     }
 
     /**
-     * Get last update date.
+     * Get last updated date.
      *
-     * @return last updated date.
+     * @return last updated date
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_UPDATE_DATE", nullable = false, length = NINETEEN)
@@ -163,7 +136,7 @@ public class RolePermissions implements java.io.Serializable {
     /**
      * Set last updated date.
      *
-     * @param lastUpdateDate last updated date.
+     * @param lastUpdateDate last updated date
      */
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;

@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "user_passwd_hist", catalog = "idm")
-public class UserPasswdHist implements java.io.Serializable {
+public class UserPasswdHistEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -36,7 +36,7 @@ public class UserPasswdHist implements java.io.Serializable {
     /**
      * User.
      */
-    private User user;
+    private UserEntity userEntity;
     /**
      * Password.
      */
@@ -57,19 +57,19 @@ public class UserPasswdHist implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public UserPasswdHist() {
+    public UserPasswdHistEntity() {
     }
 
     /**
      * Parameterised constructor.
      *
-     * @param user           user
+     * @param userEntity           user
      * @param password       password
      * @param createDate     created date
      * @param lastUpdateDate last updated date
      */
-    public UserPasswdHist(User user, String password, Date createDate, Date lastUpdateDate) {
-        this.user = user;
+    public UserPasswdHistEntity(UserEntity userEntity, String password, Date createDate, Date lastUpdateDate) {
+        this.userEntity = userEntity;
         this.password = password;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
@@ -78,15 +78,15 @@ public class UserPasswdHist implements java.io.Serializable {
     /**
      * Parameterised constructor.
      *
-     * @param user           user
+     * @param userEntity           user
      * @param password       password
      * @param salt           salt
      * @param createDate     created date
      * @param lastUpdateDate last updated date
      */
-    public UserPasswdHist(User user, String password, String salt, Date createDate,
-                          Date lastUpdateDate) {
-        this.user = user;
+    public UserPasswdHistEntity(UserEntity userEntity, String password, String salt, Date createDate,
+                                Date lastUpdateDate) {
+        this.userEntity = userEntity;
         this.password = password;
         this.salt = salt;
         this.createDate = createDate;
@@ -121,17 +121,17 @@ public class UserPasswdHist implements java.io.Serializable {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
-    public User getUser() {
-        return this.user;
+    public UserEntity getUserEntity() {
+        return this.userEntity;
     }
 
     /**
      * Set user.
      *
-     * @param user user
+     * @param userEntity user
      */
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     /**

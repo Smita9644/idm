@@ -36,7 +36,7 @@ public class PasswordPolicyAttr implements java.io.Serializable {
     /**
      * Password policy.
      */
-    private PasswordPolicy passwordPolicy;
+    private PasswordPolicyEntity passwordPolicyEntity;
     /**
      * Attribute name.
      */
@@ -63,16 +63,16 @@ public class PasswordPolicyAttr implements java.io.Serializable {
     /**
      * Parameterised constructor.
      *
-     * @param passwordPolicy passwordPolicy
+     * @param passwordPolicyEntity passwordPolicy
      * @param attrName       attrName
      * @param attrValue      attrValue
      * @param createDate     createDate
      * @param lastUpdateDate lastUpdateDate
      */
-    public PasswordPolicyAttr(PasswordPolicy passwordPolicy, String attrName, String attrValue,
+    public PasswordPolicyAttr(PasswordPolicyEntity passwordPolicyEntity, String attrName, String attrValue,
                               Date createDate,
                               Date lastUpdateDate) {
-        this.passwordPolicy = passwordPolicy;
+        this.passwordPolicyEntity = passwordPolicyEntity;
         this.attrName = attrName;
         this.attrValue = attrValue;
         this.createDate = createDate;
@@ -107,17 +107,17 @@ public class PasswordPolicyAttr implements java.io.Serializable {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POLICY_ID", nullable = false)
-    public PasswordPolicy getPasswordPolicy() {
-        return this.passwordPolicy;
+    public PasswordPolicyEntity getPasswordPolicyEntity() {
+        return this.passwordPolicyEntity;
     }
 
     /**
      * Set  password policy.
      *
-     * @param passwordPolicy passwordPolicy
+     * @param passwordPolicyEntity passwordPolicy
      */
-    public void setPasswordPolicy(PasswordPolicy passwordPolicy) {
-        this.passwordPolicy = passwordPolicy;
+    public void setPasswordPolicyEntity(PasswordPolicyEntity passwordPolicyEntity) {
+        this.passwordPolicyEntity = passwordPolicyEntity;
     }
 
     /**

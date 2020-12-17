@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "address", catalog = "idm")
-public class Address implements java.io.Serializable {
+public class AddressEntity extends BaseHistoryEntity implements java.io.Serializable {
     /**
      * Size for string field.
      */
@@ -36,7 +36,7 @@ public class Address implements java.io.Serializable {
     /**
      * Enterprise.
      */
-    private Enterprise enterprise;
+    private EnterpriseEntity enterpriseEntity;
     /**
      * House name.
      */
@@ -73,26 +73,13 @@ public class Address implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public Address() {
+    public AddressEntity() {
     }
 
     /**
-     * Parameterised constructor.
+     * Parameterised constructor for Address Entity.
      *
-     * @param enterprise     enterprise
-     * @param createDate     createDate
-     * @param lastUpdateDate updateDate
-     */
-    public Address(Enterprise enterprise, Date createDate, Date lastUpdateDate) {
-        this.enterprise = enterprise;
-        this.createDate = createDate;
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
-    /**
-     * Parametriesed constructor for Address Entity.
-     *
-     * @param enterprise     enterprise
+     * @param enterpriseEntity     enterprise
      * @param houseName      houseName
      * @param street         street
      * @param city           city
@@ -103,10 +90,10 @@ public class Address implements java.io.Serializable {
      * @param lastUpdateDate lastUpdateDate
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public Address(Enterprise enterprise, String houseName, String street, String city,
-                   String county, String postCode,
-                   String country, Date createDate, Date lastUpdateDate) {
-        this.enterprise = enterprise;
+    public AddressEntity(EnterpriseEntity enterpriseEntity, String houseName, String street, String city,
+                         String county, String postCode,
+                         String country, Date createDate, Date lastUpdateDate) {
+        this.enterpriseEntity = enterpriseEntity;
         this.houseName = houseName;
         this.street = street;
         this.city = city;
@@ -145,17 +132,17 @@ public class Address implements java.io.Serializable {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ENTERPRISE_ID", nullable = false)
-    public Enterprise getEnterprise() {
-        return this.enterprise;
+    public EnterpriseEntity getEnterpriseEntity() {
+        return this.enterpriseEntity;
     }
 
     /**
      * Set Enterprise to the Address.
      *
-     * @param enterprise enterprise
+     * @param enterpriseEntity enterprise
      */
-    public void setEnterprise(Enterprise enterprise) {
-        this.enterprise = enterprise;
+    public void setEnterpriseEntity(EnterpriseEntity enterpriseEntity) {
+        this.enterpriseEntity = enterpriseEntity;
     }
 
     /**
