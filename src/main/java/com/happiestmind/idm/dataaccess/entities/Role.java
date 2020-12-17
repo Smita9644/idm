@@ -15,13 +15,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 /**
- * Permission Entity.
+ * Role Entity.
  */
 @Entity
-@Table(name = "permission", catalog = "idm")
-public class PermissionEntity implements java.io.Serializable {
+@Table(name = "role", catalog = "idm", uniqueConstraints = @UniqueConstraint(columnNames = {"NAME",
+    "ENTERPRISE_CODE"}))
+public class Role implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -35,11 +37,15 @@ public class PermissionEntity implements java.io.Serializable {
      */
     public static final int TWO_FIFTY_SIX = 256;
     /**
+     * Enterprise code.
+     */
+    public static final int FOURTEEN = 14;
+    /**
      * Id.
      */
     private Long id;
     /**
-     * Name of permission.
+     * Name of the role.
      */
     private String name;
     /**
@@ -47,66 +53,67 @@ public class PermissionEntity implements java.io.Serializable {
      */
     private String description;
     /**
-     * Feature.
-     */
-    private String feature;
-    /**
-     * Type.
-     */
-    private int type;
-    /**
      * Status.
      */
     private Character status;
     /**
-     * Created Date.
+     * Enterprise code.
+     */
+    private String enterpriseCode;
+    /**
+     * Created date.
      */
     private Date createDate;
     /**
-     * Updated date.
+     * Last updated date.
      */
     private Date lastUpdateDate;
     /**
+     * User roles.
+     */
+    private Set<UserRoles> userRoleEntities = new HashSet(0);
+    /**
      * Role permissions.
      */
-    private Set<RolePermissionsEntity> rolePermissionEntities = new HashSet(0);
+    private Set<RolePermissions> rolePermissionEntities = new HashSet(0);
 
     /**
-     * Parameter less constructor.
+     * Parameter less constructor for role entity.
      */
-    public PermissionEntity() {
+    public Role() {
     }
 
     /**
-     * Parameterised constructor.
+     * Parametrised constructor for role.
      *
      * @param name            name
      * @param description     description
-     * @param feature         feature
-     * @param type            type
      * @param status          status
+     * @param enterpriseCode  enterpriseCode
      * @param createDate      createDate
      * @param lastUpdateDate  lastUpdateDate
+     * @param userRoleEntities       userRoleses
      * @param rolePermissionEntities rolePermissions
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public PermissionEntity(String name, String description, String feature, int type, Character status,
-                            Date createDate,
-                            Date lastUpdateDate, Set<RolePermissionsEntity> rolePermissionEntities) {
+    public Role(String name, String description, Character status, String enterpriseCode,
+                Date createDate,
+                Date lastUpdateDate, Set<UserRoles> userRoleEntities,
+                Set<RolePermissions> rolePermissionEntities) {
         this.name = name;
         this.description = description;
-        this.feature = feature;
-        this.type = type;
         this.status = status;
+        this.enterpriseCode = enterpriseCode;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
-        this.rolePermissionEntities = rolePermissionEntities;
+        this.userRoleEntities = userRoleEntities;
+        this.rolePermissionEntities = this.rolePermissionEntities;
     }
 
     /**
-     * Get id.
+     * Get id of role.
      *
-     * @return return id of permission
+     * @return id
      */
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -116,7 +123,7 @@ public class PermissionEntity implements java.io.Serializable {
     }
 
     /**
-     * Set id of permission.
+     * Set id to the role.
      *
      * @param id id
      */
@@ -125,9 +132,9 @@ public class PermissionEntity implements java.io.Serializable {
     }
 
     /**
-     * Get name of permission.
+     * Get name of the role.
      *
-     * @return name of permission
+     * @return name of role
      */
     @Column(name = "NAME", nullable = false, length = FIFTY)
     public String getName() {
@@ -135,26 +142,26 @@ public class PermissionEntity implements java.io.Serializable {
     }
 
     /**
-     * Set name of permission.
+     * Set name to role.
      *
-     * @param name name of permission
+     * @param name name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Get description.
+     * Get description of the role.
      *
-     * @return description of the permission
+     * @return description
      */
-    @Column(name = "DESCRIPTION", nullable = false, length = TWO_FIFTY_SIX)
+    @Column(name = "DESCRIPTION", length = TWO_FIFTY_SIX)
     public String getDescription() {
         return this.description;
     }
 
     /**
-     * Set description to permission.
+     * Set description to the role.
      *
      * @param description description
      */
@@ -163,47 +170,9 @@ public class PermissionEntity implements java.io.Serializable {
     }
 
     /**
-     * Get feature of the permission.
+     * Get status of the role.
      *
-     * @return feature of permission.
-     */
-    @Column(name = "FEATURE", nullable = false, length = FIFTY)
-    public String getFeature() {
-        return this.feature;
-    }
-
-    /**
-     * Set feature to the permission.
-     *
-     * @param feature feature
-     */
-    public void setFeature(String feature) {
-        this.feature = feature;
-    }
-
-    /**
-     * Get type of permission.
-     *
-     * @return type of permission
-     */
-    @Column(name = "TYPE", nullable = false)
-    public int getType() {
-        return this.type;
-    }
-
-    /**
-     * Set type to the permission.
-     *
-     * @param type type
-     */
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    /**
-     * Get status of the permission.
-     *
-     * @return status of the permission
+     * @return status of the role
      */
     @Column(name = "STATUS", length = 1)
     public Character getStatus() {
@@ -211,7 +180,7 @@ public class PermissionEntity implements java.io.Serializable {
     }
 
     /**
-     * Set status to the permission.
+     * Set status of the role.
      *
      * @param status status
      */
@@ -220,7 +189,26 @@ public class PermissionEntity implements java.io.Serializable {
     }
 
     /**
-     * Get created date of permission.
+     * Get enterprice code.
+     *
+     * @return enterprise code
+     */
+    @Column(name = "ENTERPRISE_CODE", length = FOURTEEN)
+    public String getEnterpriseCode() {
+        return this.enterpriseCode;
+    }
+
+    /**
+     * Set enterprise code.
+     *
+     * @param enterpriseCode enterprise code
+     */
+    public void setEnterpriseCode(String enterpriseCode) {
+        this.enterpriseCode = enterpriseCode;
+    }
+
+    /**
+     * Get created date of the role.
      *
      * @return created date
      */
@@ -231,16 +219,16 @@ public class PermissionEntity implements java.io.Serializable {
     }
 
     /**
-     * Set created date to permission.
+     * Set created daate to the role.
      *
-     * @param createDate created date
+     * @param createDate createDate
      */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
     /**
-     * Get last updated date.
+     * Get last updated date of the role.
      *
      * @return last updated date
      */
@@ -251,12 +239,31 @@ public class PermissionEntity implements java.io.Serializable {
     }
 
     /**
-     * Set last updated date.
+     * Set last update date.
      *
-     * @param lastUpdateDate last upated date
+     * @param lastUpdateDate last update date
      */
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    /**
+     * Get user roles.
+     *
+     * @return user roles
+     */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    public Set<UserRoles> getUserRoleEntities() {
+        return this.userRoleEntities;
+    }
+
+    /**
+     * Set user roles.
+     *
+     * @param userRoleEntities user roles.
+     */
+    public void setUserRoleEntities(Set<UserRoles> userRoleEntities) {
+        this.userRoleEntities = userRoleEntities;
     }
 
     /**
@@ -264,17 +271,17 @@ public class PermissionEntity implements java.io.Serializable {
      *
      * @return role permissions
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "permission")
-    public Set<RolePermissionsEntity> getRolePermissionEntities() {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    public Set<RolePermissions> getRolePermissionEntities() {
         return this.rolePermissionEntities;
     }
 
     /**
      * Set role permissions.
      *
-     * @param rolePermissionEntities rolePermissions
+     * @param rolePermissionEntities role permissions
      */
-    public void setRolePermissionEntities(Set<RolePermissionsEntity> rolePermissionEntities) {
+    public void setRolePermissionEntities(Set<RolePermissions> rolePermissionEntities) {
         this.rolePermissionEntities = rolePermissionEntities;
     }
 

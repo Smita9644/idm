@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "address", catalog = "idm")
-public class AddressEntity extends BaseHistoryEntity implements java.io.Serializable {
+public class Address implements java.io.Serializable {
     /**
      * Size for string field.
      */
@@ -36,7 +36,7 @@ public class AddressEntity extends BaseHistoryEntity implements java.io.Serializ
     /**
      * Enterprise.
      */
-    private EnterpriseEntity enterpriseEntity;
+    private Enterprise enterprise;
     /**
      * House name.
      */
@@ -73,13 +73,13 @@ public class AddressEntity extends BaseHistoryEntity implements java.io.Serializ
     /**
      * Parameter less constructor.
      */
-    public AddressEntity() {
+    public Address() {
     }
 
     /**
      * Parameterised constructor for Address Entity.
      *
-     * @param enterpriseEntity     enterprise
+     * @param enterprise     enterprise
      * @param houseName      houseName
      * @param street         street
      * @param city           city
@@ -90,10 +90,10 @@ public class AddressEntity extends BaseHistoryEntity implements java.io.Serializ
      * @param lastUpdateDate lastUpdateDate
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public AddressEntity(EnterpriseEntity enterpriseEntity, String houseName, String street, String city,
-                         String county, String postCode,
-                         String country, Date createDate, Date lastUpdateDate) {
-        this.enterpriseEntity = enterpriseEntity;
+    public Address(Enterprise enterprise, String houseName, String street, String city,
+                   String county, String postCode,
+                   String country, Date createDate, Date lastUpdateDate) {
+        this.enterprise = enterprise;
         this.houseName = houseName;
         this.street = street;
         this.city = city;
@@ -132,17 +132,17 @@ public class AddressEntity extends BaseHistoryEntity implements java.io.Serializ
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ENTERPRISE_ID", nullable = false)
-    public EnterpriseEntity getEnterpriseEntity() {
-        return this.enterpriseEntity;
+    public Enterprise getEnterprise() {
+        return this.enterprise;
     }
 
     /**
      * Set Enterprise to the Address.
      *
-     * @param enterpriseEntity enterprise
+     * @param enterprise enterprise
      */
-    public void setEnterpriseEntity(EnterpriseEntity enterpriseEntity) {
-        this.enterpriseEntity = enterpriseEntity;
+    public void setEnterprise(Enterprise enterprise) {
+        this.enterprise = enterprise;
     }
 
     /**

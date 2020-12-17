@@ -1,43 +1,39 @@
 package com.happiestmind.idm.dataaccess.entities;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * RolePermissions Entity.
+ * WeakPassword Entity.
  */
 @Entity
-@Table(name = "role_permissions", catalog = "idm")
-public class RolePermissionsEntity implements java.io.Serializable {
+@Table(name = "weak_password", catalog = "idm")
+public class WeakPassword implements java.io.Serializable {
     /**
      * Length of date.
      */
     public static final int NINETEEN = 19;
     /**
+     * Length of  value.
+     */
+    public static final int FIFTY = 50;
+    /**
      * Id.
      */
     private Long id;
     /**
-     * Permission.
+     * Value.
      */
-    private PermissionEntity permissionEntity;
-    /**
-     * Role.
-     */
-    private RoleEntity roleEntity;
+    private String value;
     /**
      * Create date.
      */
@@ -50,20 +46,18 @@ public class RolePermissionsEntity implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public RolePermissionsEntity() {
+    public WeakPassword() {
     }
 
     /**
-     * Parameterised constructor.
+     * Prameter less constructor.
      *
-     * @param permissionEntity     permission
-     * @param roleEntity           role
-     * @param createDate     created date
+     * @param value          value
+     * @param createDate     create Date.
      * @param lastUpdateDate last update date
      */
-    public RolePermissionsEntity(PermissionEntity permissionEntity, RoleEntity roleEntity, Date createDate, Date lastUpdateDate) {
-        this.permissionEntity = permissionEntity;
-        this.roleEntity = roleEntity;
+    public WeakPassword(String value, Date createDate, Date lastUpdateDate) {
+        this.value = value;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
     }
@@ -90,43 +84,22 @@ public class RolePermissionsEntity implements java.io.Serializable {
     }
 
     /**
-     * Get permissions.
+     * Get value.
      *
-     * @return permissions
+     * @return value
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERMISSION_ID", nullable = false)
-    public PermissionEntity getPermissionEntity() {
-        return this.permissionEntity;
+    @Column(name = "VALUE", nullable = false, length = FIFTY)
+    public String getValue() {
+        return this.value;
     }
 
     /**
-     * Set permissions.
+     * Set value.
      *
-     * @param permissionEntity permissions
+     * @param value value
      */
-    public void setPermissionEntity(PermissionEntity permissionEntity) {
-        this.permissionEntity = permissionEntity;
-    }
-
-    /**
-     * Get role.
-     *
-     * @return role
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ROLE_ID", nullable = false)
-    public RoleEntity getRoleEntity() {
-        return this.roleEntity;
-    }
-
-    /**
-     * Set role.
-     *
-     * @param roleEntity role
-     */
-    public void setRoleEntity(RoleEntity roleEntity) {
-        this.roleEntity = roleEntity;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     /**
@@ -150,9 +123,9 @@ public class RolePermissionsEntity implements java.io.Serializable {
     }
 
     /**
-     * Get last update date.
+     * Get last updated date.
      *
-     * @return last updated date.
+     * @return last updated date
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_UPDATE_DATE", nullable = false, length = NINETEEN)
@@ -163,7 +136,7 @@ public class RolePermissionsEntity implements java.io.Serializable {
     /**
      * Set last updated date.
      *
-     * @param lastUpdateDate last updated date.
+     * @param lastUpdateDate last updated date
      */
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;

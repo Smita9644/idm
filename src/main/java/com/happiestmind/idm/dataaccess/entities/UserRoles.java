@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "user_roles", catalog = "idm")
-public class UserRolesEntity implements java.io.Serializable {
+public class UserRoles implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -31,11 +31,11 @@ public class UserRolesEntity implements java.io.Serializable {
     /**
      * Role.
      */
-    private RoleEntity roleEntity;
+    private Role role;
     /**
      * User.
      */
-    private UserEntity userEntity;
+    private User user;
     /**
      * Created date.
      */
@@ -48,20 +48,20 @@ public class UserRolesEntity implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public UserRolesEntity() {
+    public UserRoles() {
     }
 
     /**
      * Parameterised constructor.
      *
-     * @param roleEntity           role
-     * @param userEntity           user
+     * @param role           role
+     * @param user           user
      * @param createDate     created date
      * @param lastUpdateDate last update date
      */
-    public UserRolesEntity(RoleEntity roleEntity, UserEntity userEntity, Date createDate, Date lastUpdateDate) {
-        this.roleEntity = roleEntity;
-        this.userEntity = userEntity;
+    public UserRoles(Role role, User user, Date createDate, Date lastUpdateDate) {
+        this.role = role;
+        this.user = user;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
     }
@@ -94,17 +94,17 @@ public class UserRolesEntity implements java.io.Serializable {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROLE_ID", nullable = false)
-    public RoleEntity getRoleEntity() {
-        return this.roleEntity;
+    public Role getRole() {
+        return this.role;
     }
 
     /**
      * Set role.
      *
-     * @param roleEntity role
+     * @param role role
      */
-    public void setRoleEntity(RoleEntity roleEntity) {
-        this.roleEntity = roleEntity;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     /**
@@ -114,17 +114,17 @@ public class UserRolesEntity implements java.io.Serializable {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
-    public UserEntity getUserEntity() {
-        return this.userEntity;
+    public User getUser() {
+        return this.user;
     }
 
     /**
      * Set user.
      *
-     * @param userEntity user
+     * @param user user
      */
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**

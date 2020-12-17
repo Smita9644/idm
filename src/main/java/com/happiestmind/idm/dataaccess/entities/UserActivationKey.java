@@ -36,7 +36,7 @@ public class UserActivationKey implements java.io.Serializable {
     /**
      * User.
      */
-    private UserEntity userEntity;
+    private User user;
     /**
      * Activation key.
      */
@@ -63,14 +63,14 @@ public class UserActivationKey implements java.io.Serializable {
     /**
      * Parameterised constructor.
      *
-     * @param userEntity           user
+     * @param user           user
      * @param activationKey  activation key
      * @param createDate     create date
      * @param lastUpdateDate last updated date
      */
-    public UserActivationKey(UserEntity userEntity, String activationKey, Date createDate,
+    public UserActivationKey(User user, String activationKey, Date createDate,
                              Date lastUpdateDate) {
-        this.userEntity = userEntity;
+        this.user = user;
         this.activationKey = activationKey;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
@@ -79,15 +79,15 @@ public class UserActivationKey implements java.io.Serializable {
     /**
      * Parameterised constructor.
      *
-     * @param userEntity           user
+     * @param user           user
      * @param activationKey  activation key
      * @param expiryDate     expiry key
      * @param createDate     created date
      * @param lastUpdateDate last updated date
      */
-    public UserActivationKey(UserEntity userEntity, String activationKey, Date expiryDate, Date createDate,
+    public UserActivationKey(User user, String activationKey, Date expiryDate, Date createDate,
                              Date lastUpdateDate) {
-        this.userEntity = userEntity;
+        this.user = user;
         this.activationKey = activationKey;
         this.expiryDate = expiryDate;
         this.createDate = createDate;
@@ -122,17 +122,17 @@ public class UserActivationKey implements java.io.Serializable {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
-    public UserEntity getUserEntity() {
-        return this.userEntity;
+    public User getUser() {
+        return this.user;
     }
 
     /**
      * Set User.
      *
-     * @param userEntity user
+     * @param user user
      */
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**

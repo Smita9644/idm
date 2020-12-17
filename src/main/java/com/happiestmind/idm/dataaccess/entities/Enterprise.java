@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "enterprise", catalog = "idm")
-public class EnterpriseEntity implements java.io.Serializable {
+public class Enterprise implements java.io.Serializable {
     /**
      * Size for string field.
      */
@@ -64,12 +64,12 @@ public class EnterpriseEntity implements java.io.Serializable {
     /**
      * Addresses for the enterprise.
      */
-    private Set<AddressEntity> addressEntities = new HashSet(0);
+    private Set<Address> addressEntities = new HashSet(0);
 
     /**
      * Parameter less constructor.
      */
-    public EnterpriseEntity() {
+    public Enterprise() {
     }
 
     /**
@@ -79,7 +79,7 @@ public class EnterpriseEntity implements java.io.Serializable {
      * @param createDate     createDate
      * @param lastUpdateDate lastUpdateDate
      */
-    public EnterpriseEntity(int enterpriseType, Date createDate, Date lastUpdateDate) {
+    public Enterprise(int enterpriseType, Date createDate, Date lastUpdateDate) {
         this.enterpriseType = enterpriseType;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
@@ -96,9 +96,9 @@ public class EnterpriseEntity implements java.io.Serializable {
      * @param lastUpdateDate last updated date
      * @param addressEntities      address
      */
-    public EnterpriseEntity(String name, Character status, String enterpriseCode, int enterpriseType,
-                            Date createDate,
-                            Date lastUpdateDate, Set<AddressEntity> addressEntities) {
+    public Enterprise(String name, Character status, String enterpriseCode, int enterpriseType,
+                      Date createDate,
+                      Date lastUpdateDate, Set<Address> addressEntities) {
         this.name = name;
         this.status = status;
         this.enterpriseCode = enterpriseCode;
@@ -251,7 +251,7 @@ public class EnterpriseEntity implements java.io.Serializable {
      * @return list of address.
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "enterprise")
-    public Set<AddressEntity> getAddressEntities() {
+    public Set<Address> getAddressEntities() {
         return this.addressEntities;
     }
 
@@ -260,7 +260,7 @@ public class EnterpriseEntity implements java.io.Serializable {
      *
      * @param addressEntities addresses
      */
-    public void setAddressEntities(Set<AddressEntity> addressEntities) {
+    public void setAddressEntities(Set<Address> addressEntities) {
         this.addressEntities = addressEntities;
     }
 
