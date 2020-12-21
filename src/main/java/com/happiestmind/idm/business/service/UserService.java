@@ -30,7 +30,7 @@ public class UserService {
     /**
      * Activate user.
      *
-     * @param userId enterprise id
+     * @param userId user id
      */
     public void activateUser(Long userId) {
         final UserEntity userEntity =
@@ -60,7 +60,7 @@ public class UserService {
     /**
      * Delete user.
      *
-     * @param userId enterprise id
+     * @param userId user id
      */
     public void deleteUser(Long userId) {
         final UserEntity userEntity =
