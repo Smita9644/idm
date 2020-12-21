@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import com.happiestmind.idm.business.service.UserService;
-import com.happiestmind.idm.web.model.EnterpriseBasicInfo;
 import com.happiestmind.idm.web.model.ResponsePayload;
 import com.happiestmind.idm.web.model.User;
 import com.happiestmind.idm.web.model.UserRoleInfo;
@@ -158,6 +157,7 @@ public class UserController {
     @ApiResponses(value = {
         @ApiResponse(code = SUCCESS, message = "Success|Ok")})
     public List<User> getDetailsOfEnterprise() {
+
         return userTransformer.toUsers(userService.findAllUsers());
     }
 }
