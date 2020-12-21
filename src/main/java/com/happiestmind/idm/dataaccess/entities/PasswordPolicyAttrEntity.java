@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "password_policy_attr", catalog = "idm")
-public class PasswordPolicyAttr implements java.io.Serializable {
+public class PasswordPolicyAttrEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -36,7 +36,7 @@ public class PasswordPolicyAttr implements java.io.Serializable {
     /**
      * Password policy.
      */
-    private PasswordPolicy passwordPolicy;
+    private PasswordPolicyEntity passwordPolicy;
     /**
      * Attribute name.
      */
@@ -57,22 +57,22 @@ public class PasswordPolicyAttr implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public PasswordPolicyAttr() {
+    public PasswordPolicyAttrEntity() {
     }
 
     /**
      * Parameterised constructor.
      *
-     * @param passwordPolicy passwordPolicy
+     * @param passwordPolicyEntity passwordPolicy
      * @param attrName       attrName
      * @param attrValue      attrValue
      * @param createDate     createDate
      * @param lastUpdateDate lastUpdateDate
      */
-    public PasswordPolicyAttr(PasswordPolicy passwordPolicy, String attrName, String attrValue,
-                              Date createDate,
-                              Date lastUpdateDate) {
-        this.passwordPolicy = passwordPolicy;
+    public PasswordPolicyAttrEntity(PasswordPolicyEntity passwordPolicyEntity, String attrName, String attrValue,
+                                    Date createDate,
+                                    Date lastUpdateDate) {
+        this.passwordPolicy = passwordPolicyEntity;
         this.attrName = attrName;
         this.attrValue = attrValue;
         this.createDate = createDate;
@@ -107,17 +107,17 @@ public class PasswordPolicyAttr implements java.io.Serializable {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POLICY_ID", nullable = false)
-    public PasswordPolicy getPasswordPolicy() {
+    public PasswordPolicyEntity getPasswordPolicy() {
         return this.passwordPolicy;
     }
 
     /**
      * Set  password policy.
      *
-     * @param passwordPolicy passwordPolicy
+     * @param passwordPolicyEntity passwordPolicy
      */
-    public void setPasswordPolicy(PasswordPolicy passwordPolicy) {
-        this.passwordPolicy = passwordPolicy;
+    public void setPasswordPolicy(PasswordPolicyEntity passwordPolicyEntity) {
+        this.passwordPolicy = passwordPolicyEntity;
     }
 
     /**

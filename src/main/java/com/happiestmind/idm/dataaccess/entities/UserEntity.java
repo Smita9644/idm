@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,7 +23,7 @@ import javax.persistence.TemporalType;
 @SuppressWarnings("checkstyle:MethodCount")
 @Entity
 @Table(name = "user", catalog = "idm")
-public class User implements java.io.Serializable {
+public class UserEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -112,9 +113,13 @@ public class User implements java.io.Serializable {
      */
     private String name;
     /**
+     * Enterprise entity.
+     */
+    private EnterpriseEntity enterprise;
+    /**
      * USer roles.
      */
-    private Set<UserRoles> userRoleEntities = new HashSet(0);
+    private Set<UserRolesEntity> userRoleEntities = new HashSet(0);
     /**
      * User password hist.
      */
@@ -127,7 +132,7 @@ public class User implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public User() {
+    public UserEntity() {
     }
 
     /**
@@ -141,9 +146,9 @@ public class User implements java.io.Serializable {
      * @param lastUpdateDate last update date
      * @param name           name
      */
-    public User(String username, String emailId, String enterpriseCode, int userType,
-                Date createDate,
-                Date lastUpdateDate, String name) {
+    public UserEntity(String username, String emailId, String enterpriseCode, int userType,
+                      Date createDate,
+                      Date lastUpdateDate, String name) {
         this.username = username;
         this.emailId = emailId;
         this.enterpriseCode = enterpriseCode;
@@ -156,34 +161,36 @@ public class User implements java.io.Serializable {
     /**
      * Paramterised constructor.
      *
-     * @param username           username
-     * @param emailId            email id
-     * @param password           password
-     * @param salt               salt
-     * @param passwdCreated      password created
-     * @param changePasswd       change password
-     * @param loginFailCount     login fail count
-     * @param emailVerified      email verified
-     * @param enterpriseCode     enter prise code
-     * @param status             status
-     * @param userType           user type
-     * @param passwordExpiry     password expiry
-     * @param createDate         create date
-     * @param lastUpdateDate     last update date
-     * @param lastLoginDate      last login time
-     * @param name               name
-     * @param userRoleEntities          user roles
-     * @param userPasswdHistEntities    user password hist
-     * @param userActivationKeys user activation key
+     * @param username               username
+     * @param emailId                email id
+     * @param password               password
+     * @param salt                   salt
+     * @param passwdCreated          password created
+     * @param changePasswd           change password
+     * @param loginFailCount         login fail count
+     * @param emailVerified          email verified
+     * @param enterpriseCode         enter prise code
+     * @param status                 status
+     * @param userType               user type
+     * @param passwordExpiry         password expiry
+     * @param createDate             create date
+     * @param lastUpdateDate         last update date
+     * @param lastLoginDate          last login time
+     * @param name                   name
+     * @param userRoleEntities       user roles
+     * @param userPasswdHistEntities user password hist
+     * @param userActivationKeys     user activation key
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public User(String username, String emailId, String password, String salt, Date passwdCreated,
-                Boolean changePasswd,
-                Integer loginFailCount, Boolean emailVerified, String enterpriseCode,
-                Character status, int userType,
-                Date passwordExpiry, Date createDate, Date lastUpdateDate, Date lastLoginDate,
-                String name, Set<UserRoles> userRoleEntities,
-                Set<UserPasswdHist> userPasswdHistEntities, Set<UserActivationKey> userActivationKeys) {
+    public UserEntity(String username, String emailId, String password, String salt,
+                      Date passwdCreated,
+                      Boolean changePasswd,
+                      Integer loginFailCount, Boolean emailVerified, String enterpriseCode,
+                      Character status, int userType,
+                      Date passwordExpiry, Date createDate, Date lastUpdateDate, Date lastLoginDate,
+                      String name, Set<UserRolesEntity> userRoleEntities,
+                      Set<UserPasswdHist> userPasswdHistEntities,
+                      Set<UserActivationKey> userActivationKeys) {
         this.username = username;
         this.emailId = emailId;
         this.password = password;
@@ -541,7 +548,7 @@ public class User implements java.io.Serializable {
      * @return user roles
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    public Set<UserRoles> getUserRoleEntities() {
+    public Set<UserRolesEntity> getUserRoleEntities() {
         return this.userRoleEntities;
     }
 
@@ -550,7 +557,7 @@ public class User implements java.io.Serializable {
      *
      * @param userRoleEntities user roles
      */
-    public void setUserRoleEntities(Set<UserRoles> userRoleEntities) {
+    public void setUserRoleEntities(Set<UserRolesEntity> userRoleEntities) {
         this.userRoleEntities = userRoleEntities;
     }
 
@@ -592,4 +599,22 @@ public class User implements java.io.Serializable {
         this.userActivationKeys = userActivationKeys;
     }
 
+    /**
+     * Get enterprise.
+     *
+     * @return enterprise
+     */
+    @OneToOne(mappedBy = "user")
+    public EnterpriseEntity getEnterprise() {
+        return enterprise;
+    }
+
+    /**
+     * Set enterprise.
+     *
+     * @param enterprise enterprise
+     */
+    public void setEnterprise(EnterpriseEntity enterprise) {
+        this.enterprise = enterprise;
+    }
 }

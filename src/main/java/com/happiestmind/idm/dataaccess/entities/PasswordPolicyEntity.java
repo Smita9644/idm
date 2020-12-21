@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "password_policy", catalog = "idm")
-public class PasswordPolicy implements java.io.Serializable {
+public class PasswordPolicyEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -69,12 +69,12 @@ public class PasswordPolicy implements java.io.Serializable {
     /**
      * Password policy attributes.
      */
-    private Set<PasswordPolicyAttr> passwordPolicyAttrs = new HashSet(0);
+    private Set<PasswordPolicyAttrEntity> passwordPolicyAttrEntities = new HashSet(0);
 
     /**
      * Parameter less constructor for Password policy.
      */
-    public PasswordPolicy() {
+    public PasswordPolicyEntity() {
     }
 
     /**
@@ -85,8 +85,8 @@ public class PasswordPolicy implements java.io.Serializable {
      * @param createDate     createDate
      * @param lastUpdateDate lastUpdateDate
      */
-    public PasswordPolicy(String enterpriseCode, String policyName, Date createDate,
-                          Date lastUpdateDate) {
+    public PasswordPolicyEntity(String enterpriseCode, String policyName, Date createDate,
+                                Date lastUpdateDate) {
         this.enterpriseCode = enterpriseCode;
         this.policyName = policyName;
         this.createDate = createDate;
@@ -102,19 +102,19 @@ public class PasswordPolicy implements java.io.Serializable {
      * @param status              status
      * @param createDate          createDate
      * @param lastUpdateDate      lastUpdateDate
-     * @param passwordPolicyAttrs passwordPolicyAttrs
+     * @param passwordPolicyAttrEntities passwordPolicyAttrs
      */
-    public PasswordPolicy(String enterpriseCode, String policyName, String description,
-                          Character status,
-                          Date createDate, Date lastUpdateDate,
-                          Set<PasswordPolicyAttr> passwordPolicyAttrs) {
+    public PasswordPolicyEntity(String enterpriseCode, String policyName, String description,
+                                Character status,
+                                Date createDate, Date lastUpdateDate,
+                                Set<PasswordPolicyAttrEntity> passwordPolicyAttrEntities) {
         this.enterpriseCode = enterpriseCode;
         this.policyName = policyName;
         this.description = description;
         this.status = status;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
-        this.passwordPolicyAttrs = passwordPolicyAttrs;
+        this.passwordPolicyAttrEntities = passwordPolicyAttrEntities;
     }
 
     /**
@@ -260,17 +260,17 @@ public class PasswordPolicy implements java.io.Serializable {
      * @return password attributes
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "passwordPolicy")
-    public Set<PasswordPolicyAttr> getPasswordPolicyAttrs() {
-        return this.passwordPolicyAttrs;
+    public Set<PasswordPolicyAttrEntity> getPasswordPolicyAttrEntities() {
+        return this.passwordPolicyAttrEntities;
     }
 
     /**
      * Set password attributes.
      *
-     * @param passwordPolicyAttrs passwordPolicyAttrs
+     * @param passwordPolicyAttrEntities passwordPolicyAttrs
      */
-    public void setPasswordPolicyAttrs(Set<PasswordPolicyAttr> passwordPolicyAttrs) {
-        this.passwordPolicyAttrs = passwordPolicyAttrs;
+    public void setPasswordPolicyAttrEntities(Set<PasswordPolicyAttrEntity> passwordPolicyAttrEntities) {
+        this.passwordPolicyAttrEntities = passwordPolicyAttrEntities;
     }
 
 }

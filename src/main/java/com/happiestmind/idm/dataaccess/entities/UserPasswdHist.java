@@ -36,7 +36,7 @@ public class UserPasswdHist implements java.io.Serializable {
     /**
      * User.
      */
-    private User user;
+    private UserEntity user;
     /**
      * Password.
      */
@@ -63,13 +63,13 @@ public class UserPasswdHist implements java.io.Serializable {
     /**
      * Parameterised constructor.
      *
-     * @param user           user
+     * @param userEntity           user
      * @param password       password
      * @param createDate     created date
      * @param lastUpdateDate last updated date
      */
-    public UserPasswdHist(User user, String password, Date createDate, Date lastUpdateDate) {
-        this.user = user;
+    public UserPasswdHist(UserEntity userEntity, String password, Date createDate, Date lastUpdateDate) {
+        this.user = userEntity;
         this.password = password;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
@@ -78,15 +78,15 @@ public class UserPasswdHist implements java.io.Serializable {
     /**
      * Parameterised constructor.
      *
-     * @param user           user
+     * @param userEntity           user
      * @param password       password
      * @param salt           salt
      * @param createDate     created date
      * @param lastUpdateDate last updated date
      */
-    public UserPasswdHist(User user, String password, String salt, Date createDate,
+    public UserPasswdHist(UserEntity userEntity, String password, String salt, Date createDate,
                           Date lastUpdateDate) {
-        this.user = user;
+        this.user = userEntity;
         this.password = password;
         this.salt = salt;
         this.createDate = createDate;
@@ -121,17 +121,17 @@ public class UserPasswdHist implements java.io.Serializable {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
-    public User getUser() {
+    public UserEntity getUser() {
         return this.user;
     }
 
     /**
      * Set user.
      *
-     * @param user user
+     * @param userEntity user
      */
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserEntity userEntity) {
+        this.user = userEntity;
     }
 
     /**

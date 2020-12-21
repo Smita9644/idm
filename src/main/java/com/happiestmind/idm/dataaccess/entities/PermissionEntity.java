@@ -16,12 +16,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Permission Entity.
  */
 @Entity
 @Table(name = "permission", catalog = "idm")
-public class Permission implements java.io.Serializable {
+public class PermissionEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -69,12 +71,12 @@ public class Permission implements java.io.Serializable {
     /**
      * Role permissions.
      */
-    private Set<RolePermissions> rolePermissionEntities = new HashSet(0);
+    private Set<RolePermissionsEntity> rolePermissionEntities = new HashSet(0);
 
     /**
      * Parameter less constructor.
      */
-    public Permission() {
+    public PermissionEntity() {
     }
 
     /**
@@ -90,9 +92,9 @@ public class Permission implements java.io.Serializable {
      * @param rolePermissionEntities rolePermissions
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public Permission(String name, String description, String feature, int type, Character status,
-                      Date createDate,
-                      Date lastUpdateDate, Set<RolePermissions> rolePermissionEntities) {
+    public PermissionEntity(String name, String description, String feature, int type, Character status,
+                            Date createDate,
+                            Date lastUpdateDate, Set<RolePermissionsEntity> rolePermissionEntities) {
         this.name = name;
         this.description = description;
         this.feature = feature;
@@ -265,7 +267,8 @@ public class Permission implements java.io.Serializable {
      * @return role permissions
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "permission")
-    public Set<RolePermissions> getRolePermissionEntities() {
+    @JsonIgnore
+    public Set<RolePermissionsEntity> getRolePermissionEntities() {
         return this.rolePermissionEntities;
     }
 
@@ -274,7 +277,7 @@ public class Permission implements java.io.Serializable {
      *
      * @param rolePermissionEntities rolePermissions
      */
-    public void setRolePermissionEntities(Set<RolePermissions> rolePermissionEntities) {
+    public void setRolePermissionEntities(Set<RolePermissionsEntity> rolePermissionEntities) {
         this.rolePermissionEntities = rolePermissionEntities;
     }
 

@@ -1,43 +1,41 @@
 package com.happiestmind.idm.dataaccess.entities;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * UserRoles Entity.
+ * WeakPassword Entity.
  */
 @Entity
-@Table(name = "user_roles", catalog = "idm")
-public class UserRoles implements java.io.Serializable {
+@Table(name = "weak_password", catalog = "idm")
+public class WeakPasswordEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
     public static final int NINETEEN = 19;
     /**
+     * Length of  value.
+     */
+    public static final int FIFTY = 50;
+    /**
      * Id.
      */
     private Long id;
     /**
-     * Role.
+     * Value.
      */
-    private Role role;
+    private String value;
     /**
-     * User.
-     */
-    private User user;
-    /**
-     * Created date.
+     * Create date.
      */
     private Date createDate;
     /**
@@ -48,20 +46,18 @@ public class UserRoles implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public UserRoles() {
+    public WeakPasswordEntity() {
     }
 
     /**
-     * Parameterised constructor.
+     * Prameter less constructor.
      *
-     * @param role           role
-     * @param user           user
-     * @param createDate     created date
+     * @param value          value
+     * @param createDate     create Date.
      * @param lastUpdateDate last update date
      */
-    public UserRoles(Role role, User user, Date createDate, Date lastUpdateDate) {
-        this.role = role;
-        this.user = user;
+    public WeakPasswordEntity(String value, Date createDate, Date lastUpdateDate) {
+        this.value = value;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
     }
@@ -72,7 +68,7 @@ public class UserRoles implements java.io.Serializable {
      * @return id
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     public Long getId() {
         return this.id;
@@ -88,49 +84,28 @@ public class UserRoles implements java.io.Serializable {
     }
 
     /**
-     * Get role.
+     * Get value.
      *
-     * @return role
+     * @return value
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ROLE_ID", nullable = false)
-    public Role getRole() {
-        return this.role;
+    @Column(name = "VALUE", nullable = false, length = FIFTY)
+    public String getValue() {
+        return this.value;
     }
 
     /**
-     * Set role.
+     * Set value.
      *
-     * @param role role
+     * @param value value
      */
-    public void setRole(Role role) {
-        this.role = role;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     /**
-     * Get user.
+     * Get created date.
      *
-     * @return user
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", nullable = false)
-    public User getUser() {
-        return this.user;
-    }
-
-    /**
-     * Set user.
-     *
-     * @param user user
-     */
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    /**
-     * Get create date.
-     *
-     * @return create date
+     * @return created date
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_DATE", nullable = false, length = NINETEEN)
@@ -139,9 +114,9 @@ public class UserRoles implements java.io.Serializable {
     }
 
     /**
-     * Set create date.
+     * Set created date.
      *
-     * @param createDate create date.
+     * @param createDate created date
      */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
@@ -150,7 +125,7 @@ public class UserRoles implements java.io.Serializable {
     /**
      * Get last updated date.
      *
-     * @return last updated date.
+     * @return last updated date
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_UPDATE_DATE", nullable = false, length = NINETEEN)
@@ -161,7 +136,7 @@ public class UserRoles implements java.io.Serializable {
     /**
      * Set last updated date.
      *
-     * @param lastUpdateDate last update Date.
+     * @param lastUpdateDate last updated date
      */
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;

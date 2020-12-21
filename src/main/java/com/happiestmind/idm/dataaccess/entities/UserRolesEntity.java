@@ -6,9 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,11 +15,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * RolePermissions Entity.
+ * UserRoles Entity.
  */
 @Entity
-@Table(name = "role_permissions", catalog = "idm")
-public class RolePermissions implements java.io.Serializable {
+@Table(name = "user_roles", catalog = "idm")
+public class UserRolesEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -31,15 +29,15 @@ public class RolePermissions implements java.io.Serializable {
      */
     private Long id;
     /**
-     * Permission.
-     */
-    private Permission permission;
-    /**
      * Role.
      */
-    private Role role;
+    private RoleEntity role;
     /**
-     * Create date.
+     * User.
+     */
+    private UserEntity user;
+    /**
+     * Created date.
      */
     private Date createDate;
     /**
@@ -50,20 +48,20 @@ public class RolePermissions implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public RolePermissions() {
+    public UserRolesEntity() {
     }
 
     /**
      * Parameterised constructor.
      *
-     * @param permission     permission
-     * @param role           role
+     * @param roleEntity           role
+     * @param userEntity           user
      * @param createDate     created date
      * @param lastUpdateDate last update date
      */
-    public RolePermissions(Permission permission, Role role, Date createDate, Date lastUpdateDate) {
-        this.permission = permission;
-        this.role = role;
+    public UserRolesEntity(RoleEntity roleEntity, UserEntity userEntity, Date createDate, Date lastUpdateDate) {
+        this.role = roleEntity;
+        this.user = userEntity;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
     }
@@ -74,7 +72,7 @@ public class RolePermissions implements java.io.Serializable {
      * @return id
      */
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     public Long getId() {
         return this.id;
@@ -90,49 +88,49 @@ public class RolePermissions implements java.io.Serializable {
     }
 
     /**
-     * Get permissions.
-     *
-     * @return permissions
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERMISSION_ID", nullable = false)
-    public Permission getPermission() {
-        return this.permission;
-    }
-
-    /**
-     * Set permissions.
-     *
-     * @param permission permissions
-     */
-    public void setPermission(Permission permission) {
-        this.permission = permission;
-    }
-
-    /**
      * Get role.
      *
      * @return role
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROLE_ID", nullable = false)
-    public Role getRole() {
+    public RoleEntity getRole() {
         return this.role;
     }
 
     /**
      * Set role.
      *
-     * @param role role
+     * @param roleEntity role
      */
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(RoleEntity roleEntity) {
+        this.role = roleEntity;
     }
 
     /**
-     * Get created date.
+     * Get user.
      *
-     * @return created date
+     * @return user
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    public UserEntity getUser() {
+        return this.user;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param userEntity user
+     */
+    public void setUser(UserEntity userEntity) {
+        this.user = userEntity;
+    }
+
+    /**
+     * Get create date.
+     *
+     * @return create date
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_DATE", nullable = false, length = NINETEEN)
@@ -141,16 +139,16 @@ public class RolePermissions implements java.io.Serializable {
     }
 
     /**
-     * Set created date.
+     * Set create date.
      *
-     * @param createDate created date
+     * @param createDate create date.
      */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
     /**
-     * Get last update date.
+     * Get last updated date.
      *
      * @return last updated date.
      */
@@ -163,7 +161,7 @@ public class RolePermissions implements java.io.Serializable {
     /**
      * Set last updated date.
      *
-     * @param lastUpdateDate last updated date.
+     * @param lastUpdateDate last update Date.
      */
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;

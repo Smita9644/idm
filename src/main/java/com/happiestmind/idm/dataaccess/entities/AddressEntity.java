@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "address", catalog = "idm")
-public class Address implements java.io.Serializable {
+public class AddressEntity implements java.io.Serializable {
     /**
      * Size for string field.
      */
@@ -36,7 +36,7 @@ public class Address implements java.io.Serializable {
     /**
      * Enterprise.
      */
-    private Enterprise enterprise;
+    private EnterpriseEntity enterprise;
     /**
      * House name.
      */
@@ -73,7 +73,7 @@ public class Address implements java.io.Serializable {
     /**
      * Parameter less constructor.
      */
-    public Address() {
+    public AddressEntity() {
     }
 
     /**
@@ -90,9 +90,9 @@ public class Address implements java.io.Serializable {
      * @param lastUpdateDate lastUpdateDate
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public Address(Enterprise enterprise, String houseName, String street, String city,
-                   String county, String postCode,
-                   String country, Date createDate, Date lastUpdateDate) {
+    public AddressEntity(EnterpriseEntity enterprise, String houseName, String street, String city,
+                         String county, String postCode,
+                         String country, Date createDate, Date lastUpdateDate) {
         this.enterprise = enterprise;
         this.houseName = houseName;
         this.street = street;
@@ -132,7 +132,7 @@ public class Address implements java.io.Serializable {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ENTERPRISE_ID", nullable = false)
-    public Enterprise getEnterprise() {
+    public EnterpriseEntity getEnterprise() {
         return this.enterprise;
     }
 
@@ -141,7 +141,7 @@ public class Address implements java.io.Serializable {
      *
      * @param enterprise enterprise
      */
-    public void setEnterprise(Enterprise enterprise) {
+    public void setEnterprise(EnterpriseEntity enterprise) {
         this.enterprise = enterprise;
     }
 

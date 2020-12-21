@@ -23,7 +23,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "role", catalog = "idm", uniqueConstraints = @UniqueConstraint(columnNames = {"NAME",
     "ENTERPRISE_CODE"}))
-public class Role implements java.io.Serializable {
+public class RoleEntity implements java.io.Serializable {
     /**
      * Length of date.
      */
@@ -71,16 +71,16 @@ public class Role implements java.io.Serializable {
     /**
      * User roles.
      */
-    private Set<UserRoles> userRoleEntities = new HashSet(0);
+    private Set<UserRolesEntity> userRoleEntities = new HashSet(0);
     /**
      * Role permissions.
      */
-    private Set<RolePermissions> rolePermissionEntities = new HashSet(0);
+    private Set<RolePermissionsEntity> rolePermissionEntities = new HashSet(0);
 
     /**
      * Parameter less constructor for role entity.
      */
-    public Role() {
+    public RoleEntity() {
     }
 
     /**
@@ -96,10 +96,10 @@ public class Role implements java.io.Serializable {
      * @param rolePermissionEntities rolePermissions
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public Role(String name, String description, Character status, String enterpriseCode,
-                Date createDate,
-                Date lastUpdateDate, Set<UserRoles> userRoleEntities,
-                Set<RolePermissions> rolePermissionEntities) {
+    public RoleEntity(String name, String description, Character status, String enterpriseCode,
+                      Date createDate,
+                      Date lastUpdateDate, Set<UserRolesEntity> userRoleEntities,
+                      Set<RolePermissionsEntity> rolePermissionEntities) {
         this.name = name;
         this.description = description;
         this.status = status;
@@ -253,7 +253,7 @@ public class Role implements java.io.Serializable {
      * @return user roles
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
-    public Set<UserRoles> getUserRoleEntities() {
+    public Set<UserRolesEntity> getUserRoleEntities() {
         return this.userRoleEntities;
     }
 
@@ -262,7 +262,7 @@ public class Role implements java.io.Serializable {
      *
      * @param userRoleEntities user roles.
      */
-    public void setUserRoleEntities(Set<UserRoles> userRoleEntities) {
+    public void setUserRoleEntities(Set<UserRolesEntity> userRoleEntities) {
         this.userRoleEntities = userRoleEntities;
     }
 
@@ -272,7 +272,7 @@ public class Role implements java.io.Serializable {
      * @return role permissions
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
-    public Set<RolePermissions> getRolePermissionEntities() {
+    public Set<RolePermissionsEntity> getRolePermissionEntities() {
         return this.rolePermissionEntities;
     }
 
@@ -281,7 +281,7 @@ public class Role implements java.io.Serializable {
      *
      * @param rolePermissionEntities role permissions
      */
-    public void setRolePermissionEntities(Set<RolePermissions> rolePermissionEntities) {
+    public void setRolePermissionEntities(Set<RolePermissionsEntity> rolePermissionEntities) {
         this.rolePermissionEntities = rolePermissionEntities;
     }
 
