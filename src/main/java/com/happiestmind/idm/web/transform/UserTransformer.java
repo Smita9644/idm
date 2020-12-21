@@ -73,4 +73,19 @@ public class UserTransformer {
         }
         return userRole;
     }
+
+    /**
+     * Convert list of user entity into user.
+     *
+     * @param userEntities list of user entity
+     * @return users
+     */
+    public List<User> toUsers(List<UserEntity> userEntities) {
+        final List<User> users = new ArrayList<>();
+        for (UserEntity userEntity : userEntities
+        ) {
+            users.add(toUser(userEntity));
+        }
+        return users;
+    }
 }

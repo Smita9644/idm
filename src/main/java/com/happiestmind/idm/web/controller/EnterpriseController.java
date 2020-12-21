@@ -87,7 +87,8 @@ public class EnterpriseController {
     public ResponsePayload createEnterprise(@RequestBody
                                                 EnterpriseBasicInfo enterpriseBasicInfo) {
         enterpriseService.createEnterprise(enterpriseBasicInfo);
-        return null;
+        return responsePayloadTransformer
+            .toResponsePayload(HttpStatus.CREATED, "Enterprise created successfully");
     }
 
     /**

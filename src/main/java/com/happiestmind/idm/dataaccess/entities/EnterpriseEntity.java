@@ -4,16 +4,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -70,10 +67,6 @@ public class EnterpriseEntity implements java.io.Serializable {
      * Addresses for the enterprise.
      */
     private Set<AddressEntity> addressEntities = new HashSet(0);
-    /**
-     * User.
-     */
-    private UserEntity user;
 
     /**
      * Parameter less constructor.
@@ -104,14 +97,12 @@ public class EnterpriseEntity implements java.io.Serializable {
      * @param createDate      created date
      * @param lastUpdateDate  last updated date
      * @param addressEntities address
-     * @param userEntity      user
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public EnterpriseEntity(String name, Character status, String enterpriseCode,
                             int enterpriseType,
                             Date createDate,
-                            Date lastUpdateDate, Set<AddressEntity> addressEntities,
-                            UserEntity userEntity) {
+                            Date lastUpdateDate, Set<AddressEntity> addressEntities) {
         this.name = name;
         this.status = status;
         this.enterpriseCode = enterpriseCode;
@@ -119,7 +110,6 @@ public class EnterpriseEntity implements java.io.Serializable {
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
         this.addressEntities = addressEntities;
-        this.user = userEntity;
     }
 
     /**
@@ -277,25 +267,5 @@ public class EnterpriseEntity implements java.io.Serializable {
      */
     public void setAddressEntities(Set<AddressEntity> addressEntities) {
         this.addressEntities = addressEntities;
-    }
-
-    /**
-     * Get user.
-     *
-     * @return user
-     */
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
-    public UserEntity getUser() {
-        return user;
-    }
-
-    /**
-     * Set user.
-     *
-     * @param user userEntity
-     */
-    public void setUser(UserEntity user) {
-        this.user = user;
     }
 }

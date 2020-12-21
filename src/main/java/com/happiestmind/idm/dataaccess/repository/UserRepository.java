@@ -1,5 +1,6 @@
 package com.happiestmind.idm.dataaccess.repository;
 
+import java.util.List;
 
 import com.happiestmind.idm.dataaccess.entities.UserEntity;
 
@@ -15,5 +16,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      * @param enterpriseCode enterprise code
      * @return User
      */
-    UserEntity findByEnterpriseCode(String enterpriseCode);
+    List<UserEntity> findByEnterpriseCode(String enterpriseCode);
 }

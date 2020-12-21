@@ -113,10 +113,6 @@ public class UserEntity implements java.io.Serializable {
      */
     private String name;
     /**
-     * Enterprise entity.
-     */
-    private EnterpriseEntity enterprise;
-    /**
      * USer roles.
      */
     private Set<UserRolesEntity> userRoleEntities = new HashSet(0);
@@ -597,24 +593,5 @@ public class UserEntity implements java.io.Serializable {
      */
     public void setUserActivationKeys(Set<UserActivationKey> userActivationKeys) {
         this.userActivationKeys = userActivationKeys;
-    }
-
-    /**
-     * Get enterprise.
-     *
-     * @return enterprise
-     */
-    @OneToOne(mappedBy = "user")
-    public EnterpriseEntity getEnterprise() {
-        return enterprise;
-    }
-
-    /**
-     * Set enterprise.
-     *
-     * @param enterprise enterprise
-     */
-    public void setEnterprise(EnterpriseEntity enterprise) {
-        this.enterprise = enterprise;
     }
 }

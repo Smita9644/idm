@@ -1,6 +1,6 @@
 package com.happiestmind.idm.web.transform;
 
-import com.happiestmind.idm.dataaccess.entities.EnterpriseEntity;
+import com.happiestmind.idm.business.model.EnterpriseUser;
 import com.happiestmind.idm.web.model.Enterprise;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,20 +37,21 @@ public class EnterpriseTransformer {
     /**
      * Conversion from Enterprise entity To enterprise (business model class).
      *
-     * @param enterpriseEntity enterprise entity
+     * @param enterpriseUser enterprise user class
      * @return enterprise
      */
-    public Enterprise toEnterprise(EnterpriseEntity enterpriseEntity) {
+    public Enterprise toEnterprise(EnterpriseUser enterpriseUser) {
         return Enterprise.builder()
-            .address(addressTransformer.toAddress(enterpriseEntity.getAddressEntities()))
-            .admin(userTransformer.toUser(enterpriseEntity.getUser()))
-            .enterpriseCode(enterpriseEntity.getEnterpriseCode())
-            .enterpriseType(enterpriseEntity.getEnterpriseType())
-            .name(enterpriseEntity.getName())
-            .createDate(enterpriseEntity.getCreateDate())
-            .lastUpdateDate(enterpriseEntity.getLastUpdateDate())
-            .status(enterpriseEntity.getStatus())
-            .id(enterpriseEntity.getId())
+            .address(addressTransformer
+                .toAddress(enterpriseUser.getEnterpriseEntity().getAddressEntities()))
+            .admin(userTransformer.toUser(enterpriseUser.getUserEntity()))
+            .enterpriseCode(enterpriseUser.getEnterpriseEntity().getEnterpriseCode())
+            .enterpriseType(enterpriseUser.getEnterpriseEntity().getEnterpriseType())
+            .name(enterpriseUser.getEnterpriseEntity().getName())
+            .createDate(enterpriseUser.getEnterpriseEntity().getCreateDate())
+            .lastUpdateDate(enterpriseUser.getEnterpriseEntity().getLastUpdateDate())
+            .status(enterpriseUser.getEnterpriseEntity().getStatus())
+            .id(enterpriseUser.getEnterpriseEntity().getId())
             .build();
     }
 }
