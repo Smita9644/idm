@@ -62,6 +62,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         final EntityNotFoundException exception, final HttpServletRequest request) {
         return new ResponseEntity<>(buildErrorResponse(exception, request), HttpStatus.NOT_FOUND);
     }
+
     /**
      * Handling method for unexpected exceptions.
      *
@@ -93,7 +94,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ErrorResponse.builder()
             .errorMessage(errorMessageBuilder.toString())
-            .requestedUri(request.getRequestURI())
             .timestamp(LocalDateTime.now().format(this.dateTimeFormatter)).build();
     }
 }

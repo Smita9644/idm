@@ -17,10 +17,6 @@ import lombok.Getter;
 @JsonDeserialize(builder = Enterprise.EnterpriseBuilder.class)
 public class Enterprise {
     /**
-     * Enterprise id.
-     */
-    private Long id;
-    /**
      * Enterprise name.
      */
     private String name;
@@ -32,10 +28,6 @@ public class Enterprise {
      * Code for enterprise.
      */
     private String enterpriseCode;
-    /**
-     * Enterprise type.
-     */
-    private int enterpriseType;
     /**
      * Address.
      */
@@ -52,6 +44,10 @@ public class Enterprise {
      * Last updated date of enterprise.
      */
     private Date lastUpdateDate;
+    /**
+     * Enterprise type.
+     */
+    private int enterpriseType;
 
     /**
      * Enterprise Builder inner class.

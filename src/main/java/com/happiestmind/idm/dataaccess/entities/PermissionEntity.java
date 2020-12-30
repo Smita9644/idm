@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -82,19 +83,21 @@ public class PermissionEntity implements java.io.Serializable {
     /**
      * Parameterised constructor.
      *
-     * @param name            name
-     * @param description     description
-     * @param feature         feature
-     * @param type            type
-     * @param status          status
-     * @param createDate      createDate
-     * @param lastUpdateDate  lastUpdateDate
+     * @param name                   name
+     * @param description            description
+     * @param feature                feature
+     * @param type                   type
+     * @param status                 status
+     * @param createDate             createDate
+     * @param lastUpdateDate         lastUpdateDate
      * @param rolePermissionEntities rolePermissions
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public PermissionEntity(String name, String description, String feature, int type, Character status,
+    public PermissionEntity(String name, String description, String feature, int type,
+                            Character status,
                             Date createDate,
-                            Date lastUpdateDate, Set<RolePermissionsEntity> rolePermissionEntities) {
+                            Date lastUpdateDate,
+                            Set<RolePermissionsEntity> rolePermissionEntities) {
         this.name = name;
         this.description = description;
         this.feature = feature;

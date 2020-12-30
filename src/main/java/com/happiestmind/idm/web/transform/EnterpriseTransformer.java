@@ -51,7 +51,6 @@ public class EnterpriseTransformer {
             .createDate(enterpriseUser.getEnterpriseEntity().getCreateDate())
             .lastUpdateDate(enterpriseUser.getEnterpriseEntity().getLastUpdateDate())
             .status(enterpriseUser.getEnterpriseEntity().getStatus())
-            .id(enterpriseUser.getEnterpriseEntity().getId())
             .build();
     }
 }

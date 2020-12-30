@@ -1,5 +1,7 @@
 package com.happiestmind.idm.web.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -7,27 +9,30 @@ import lombok.Builder;
 import lombok.Getter;
 
 /**
- * Enterprise basic info.
+ * Role.
  */
 @Getter
 @Builder
-@JsonDeserialize(builder = EnterpriseBasicInfo.EnterpriseBasicInfoBuilder.class)
-public class EnterpriseBasicInfo {
+@JsonDeserialize(builder = Role.RoleBuilder.class)
+public class Role {
     /**
-     * Enterprise name.
+     * Name of the role.
      */
     private String name;
-
     /**
-     * User details.
+     * Description of the role.
      */
-    private UserBasicInfo admin;
+    private String description;
+    /**
+     * List of permission ids.
+     */
+    private List<Long> permissionIds;
 
     /**
-     * Enterprise basic info Builder inner class.
+     * Role Builder inner class.
      */
     @JsonPOJOBuilder(withPrefix = "")
-    public static class EnterpriseBasicInfoBuilder {
+    public static class RoleBuilder {
 
     }
 }

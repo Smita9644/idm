@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,12 +18,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import lombok.EqualsAndHashCode;
+
 /**
  * Role Entity.
  */
 @Entity
 @Table(name = "role", catalog = "idm", uniqueConstraints = @UniqueConstraint(columnNames = {"NAME",
     "ENTERPRISE_CODE"}))
+@EqualsAndHashCode
 public class RoleEntity implements java.io.Serializable {
     /**
      * Length of date.
@@ -86,12 +90,12 @@ public class RoleEntity implements java.io.Serializable {
     /**
      * Parametrised constructor for role.
      *
-     * @param name            name
-     * @param description     description
-     * @param status          status
-     * @param enterpriseCode  enterpriseCode
-     * @param createDate      createDate
-     * @param lastUpdateDate  lastUpdateDate
+     * @param name                   name
+     * @param description            description
+     * @param status                 status
+     * @param enterpriseCode         enterpriseCode
+     * @param createDate             createDate
+     * @param lastUpdateDate         lastUpdateDate
      * @param userRoleEntities       userRoleses
      * @param rolePermissionEntities rolePermissions
      */
@@ -219,7 +223,7 @@ public class RoleEntity implements java.io.Serializable {
     }
 
     /**
-     * Set created daate to the role.
+     * Set created date to the role.
      *
      * @param createDate createDate
      */
@@ -271,7 +275,8 @@ public class RoleEntity implements java.io.Serializable {
      *
      * @return role permissions
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,
+        targetEntity = RolePermissionsEntity.class, orphanRemoval = true, mappedBy = "role")
     public Set<RolePermissionsEntity> getRolePermissionEntities() {
         return this.rolePermissionEntities;
     }

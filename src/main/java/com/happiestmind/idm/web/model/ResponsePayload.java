@@ -21,6 +21,10 @@ public class ResponsePayload {
      * Message.
      */
     private String message;
+    /**
+     * Application error code.
+     */
+    private Long applicationErrorCode = 0L;
 
     /**
      * Response Payload  inner class.

@@ -94,7 +94,7 @@ public class RolePermissionsEntity implements java.io.Serializable {
      *
      * @return permissions
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PERMISSION_ID", nullable = false)
     public PermissionEntity getPermission() {
         return this.permission;

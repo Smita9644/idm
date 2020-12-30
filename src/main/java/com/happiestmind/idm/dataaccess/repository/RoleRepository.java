@@ -1,5 +1,7 @@
 package com.happiestmind.idm.dataaccess.repository;
 
+import java.util.List;
+
 import com.happiestmind.idm.dataaccess.entities.RoleEntity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +26,12 @@ public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
      * @return
      */
     RoleEntity findByNameAndEnterpriseCode(String admin, String enterpriseCode);
+
+    /**
+     * Find role by enterprise code.
+     *
+     * @param enterpriseCode enterprise code
+     * @return list of role entity
+     */
+    List<RoleEntity> findByEnterpriseCode(String enterpriseCode);
 }

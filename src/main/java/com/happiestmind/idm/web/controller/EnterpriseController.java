@@ -146,18 +146,17 @@ public class EnterpriseController {
     }
 
     /**
-     * Delete Member of DealTeam.
+     * Delete enterprise.
      *
-     * @param enterpriseId Proposal id.
+     * @param enterpriseId enterprise id.
      * @return response payload
      */
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("enterprise/{id}")
-    @ApiOperation(value = "Delete deal team member")
+    @ApiOperation(value = "Delete enterprise")
     @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
     public ResponsePayload deleteEnterprise(
         @Positive @NotNull @PathVariable("id") Long enterpriseId) {
-
         enterpriseService.deleteEnterprise(enterpriseId);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.OK, "Enterprise deleted  successfully");

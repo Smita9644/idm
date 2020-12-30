@@ -93,7 +93,7 @@ public class UserService {
                 return new EntityNotFoundException(
                     UserEntity.class, userId);
             });
-        userRepository.deleteById(userId);
+        // userRepository.deleteById(userId);
     }
 
     /**

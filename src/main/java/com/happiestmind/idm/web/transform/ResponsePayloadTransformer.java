@@ -20,7 +20,8 @@ public class ResponsePayloadTransformer {
      */
     public ResponsePayload toResponsePayload(HttpStatus success, String message) {
         return ResponsePayload.builder().code(success.value())
-            .message(message).build();
+            .message(message)
+            .applicationErrorCode((long) 0).build();
     }
 
 }

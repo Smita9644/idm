@@ -1,6 +1,8 @@
 package com.happiestmind.idm.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -156,8 +158,9 @@ public class UserController {
     @ApiOperation("Get all users")
     @ApiResponses(value = {
         @ApiResponse(code = SUCCESS, message = "Success|Ok")})
-    public List<User> getDetailsOfEnterprise() {
-
-        return userTransformer.toUsers(userService.findAllUsers());
+    public Map<String, List<User>> getDetailsOfEnterprise() {
+        final Map<String, List<User>> users = new HashMap<String, List<User>>();
+        users.put("users", userTransformer.toUsers(userService.findAllUsers()));
+        return users;
     }
 }

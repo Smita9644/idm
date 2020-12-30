@@ -19,11 +19,6 @@ public class ErrorResponse {
     private String errorMessage;
 
     /**
-     * Requested URI.
-     */
-    private String requestedUri;
-
-    /**
      * Timestamp in string format.
      */
     private String timestamp;

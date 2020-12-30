@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -96,12 +97,12 @@ public class PasswordPolicyEntity implements java.io.Serializable {
     /**
      * Parameterised constructor for Password policy.
      *
-     * @param enterpriseCode      enterpriseCode
-     * @param policyName          policyName
-     * @param description         description
-     * @param status              status
-     * @param createDate          createDate
-     * @param lastUpdateDate      lastUpdateDate
+     * @param enterpriseCode             enterpriseCode
+     * @param policyName                 policyName
+     * @param description                description
+     * @param status                     status
+     * @param createDate                 createDate
+     * @param lastUpdateDate             lastUpdateDate
      * @param passwordPolicyAttrEntities passwordPolicyAttrs
      */
     public PasswordPolicyEntity(String enterpriseCode, String policyName, String description,
@@ -259,7 +260,8 @@ public class PasswordPolicyEntity implements java.io.Serializable {
      *
      * @return password attributes
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "passwordPolicy")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true,
+        mappedBy = "passwordPolicy")
     public Set<PasswordPolicyAttrEntity> getPasswordPolicyAttrEntities() {
         return this.passwordPolicyAttrEntities;
     }
@@ -269,7 +271,8 @@ public class PasswordPolicyEntity implements java.io.Serializable {
      *
      * @param passwordPolicyAttrEntities passwordPolicyAttrs
      */
-    public void setPasswordPolicyAttrEntities(Set<PasswordPolicyAttrEntity> passwordPolicyAttrEntities) {
+    public void setPasswordPolicyAttrEntities(
+        Set<PasswordPolicyAttrEntity> passwordPolicyAttrEntities) {
         this.passwordPolicyAttrEntities = passwordPolicyAttrEntities;
     }
 

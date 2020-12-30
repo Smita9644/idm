@@ -25,6 +25,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EnterpriseService {
+    /**
+     * Admin.
+     */
     public static final String ADMIN = "ADMIN";
     /**
      * Enterprise repository.

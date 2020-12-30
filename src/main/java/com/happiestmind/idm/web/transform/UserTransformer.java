@@ -27,24 +27,16 @@ public class UserTransformer {
         if (Objects.isNull(userEntity)) {
             return null;
         }
-        return User.builder().name(userEntity.getName())
+        return User.builder()
+            .id(userEntity.getId())
+            .name(userEntity.getName())
             .username(userEntity.getUsername())
             .userType(userEntity.getUserType())
             .status(userEntity.getStatus())
-            .salt(userEntity.getSalt())
-            .password(userEntity.getPassword())
-            .passwordExpiry(userEntity.getPasswordExpiry())
-            .passwdCreated(userEntity.getPasswdCreated())
-            .loginFailCount(userEntity.getLoginFailCount())
-            .changePasswd(userEntity.getChangePasswd())
             .emailId(userEntity.getEmailId())
-            .emailVerified(userEntity.getEmailVerified())
             .enterpriseCode(userEntity.getEnterpriseCode())
-            .lastLoginDate(userEntity.getLastLoginDate())
-            .createDate(userEntity.getCreateDate())
-            .lastUpdateDate(userEntity.getLastUpdateDate())
-            .roles(toRoles(userEntity.getUserRoleEntities()))
-            .permissions(toPermissions(userEntity.getUserRoleEntities()))
+            .roleNames(toRoles(userEntity.getUserRoleEntities()))
+            .permissionNames(toPermissions(userEntity.getUserRoleEntities()))
             .build();
     }
 
