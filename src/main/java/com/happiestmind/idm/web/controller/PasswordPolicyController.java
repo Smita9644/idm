@@ -17,7 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +38,10 @@ public class PasswordPolicyController {
      * Success.
      */
     private static final int SUCCESS = 200;
+    /**
+     * Created.
+     */
+    private static final int CREATED = 201;
     /**
      * Password policy service.
      */
@@ -67,6 +73,25 @@ public class PasswordPolicyController {
     }
 
     /**
+     * Create password policy.
+     *
+     * @param passwordPolicies password policies
+     * @param enterpriseCode   enterprise code.
+     * @return Response payload.
+     */
+    @PostMapping("/passwordpolicies/{enterpriseCode}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create password policy")
+    @ApiResponses(value = {@ApiResponse(code = CREATED, message = " Created")})
+    public ResponsePayload createPasswordPolicy(
+        @PathVariable("enterpriseCode") String enterpriseCode,
+        @NotNull @RequestBody Map<String, Object> passwordPolicies) {
+        passwordPolicyService.createPasswordPolicy(enterpriseCode, passwordPolicies);
+        return responsePayloadTransformer
+            .toResponsePayload(HttpStatus.CREATED, "Password policy created successfully");
+    }
+
+    /**
      * Get password policies.
      *
      * @param enterpriseCode enterprise code
@@ -94,10 +119,9 @@ public class PasswordPolicyController {
     @PutMapping("passwordpolicies/{passwordPolicyId}/activate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Activate password policy")
-    @ApiResponses(value = {
-        @ApiResponse(code = SUCCESS, message = "Success|Ok")})
+    @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
     public ResponsePayload activatePasswordPolicy(
-        @PathVariable("passwordPolicyId") Long passwordPolicyId) {
+        @Positive @PathVariable("passwordPolicyId") Long passwordPolicyId) {
         passwordPolicyService.activatePasswordPolicy(passwordPolicyId);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.OK, "Password policy Activated successfully");
@@ -112,10 +136,9 @@ public class PasswordPolicyController {
     @PutMapping("passwordpolicies/{passwordPolicyId}/deactivate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Deactivate password policy")
-    @ApiResponses(value = {
-        @ApiResponse(code = SUCCESS, message = "Success|Ok")})
+    @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
     public ResponsePayload deactivatePasswordPolicy(
-        @PathVariable("passwordPolicyId") Long passwordPolicyId) {
+        @Positive @PathVariable("passwordPolicyId") Long passwordPolicyId) {
         passwordPolicyService.deactivatePasswordPolicy(passwordPolicyId);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.OK, "Password policy deactivate successfully");
@@ -131,7 +154,7 @@ public class PasswordPolicyController {
     @DeleteMapping("passwordpolicies/{passwordPolicyId}")
     @ApiOperation(value = "Delete password Policy")
     @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
-    public ResponsePayload deleteRole(
+    public ResponsePayload deletePasswordPolicy(
         @Positive @NotNull @PathVariable("passwordPolicyId") Long passwordPolicyId) {
         passwordPolicyService.deletePasswordPolicy(passwordPolicyId);
         return responsePayloadTransformer

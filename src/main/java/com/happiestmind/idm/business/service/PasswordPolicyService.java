@@ -1,9 +1,12 @@
 package com.happiestmind.idm.business.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import com.happiestmind.idm.dataaccess.entities.PasswordPolicyAttrEntity;
 import com.happiestmind.idm.dataaccess.entities.PasswordPolicyEntity;
-import com.happiestmind.idm.dataaccess.repository.PasswordPolicyAttrRepository;
 import com.happiestmind.idm.dataaccess.repository.PasswordPolicyRepository;
 import com.happiestmind.idm.exception.EntityNotFoundException;
 
@@ -21,26 +24,27 @@ public class PasswordPolicyService {
     public static final String PASSWORD_POLICY_NOT_FOUND_FOR_GIVEN_ID =
         "Password policy not found for given id";
     /**
+     * Policy name.
+     */
+    public static final String POLICY_NAME = "policyName";
+    /**
+     * Description.
+     */
+    public static final String DESCRIPTION = "description";
+    /**
      * Password policy repository.
      */
     private final PasswordPolicyRepository passwordPolicyRepository;
-    /**
-     * Password policy attribute repository.
-     */
-    private final PasswordPolicyAttrRepository passwordPolicyAttrRepository;
 
     /**
      * Constructor for password policy.
      *
-     * @param passwordPolicyRepository     password policy repository
-     * @param passwordPolicyAttrRepository password attribute repository
+     * @param passwordPolicyRepository password policy repository
      */
     @Autowired
     public PasswordPolicyService(
-        PasswordPolicyRepository passwordPolicyRepository,
-        PasswordPolicyAttrRepository passwordPolicyAttrRepository) {
+        PasswordPolicyRepository passwordPolicyRepository) {
         this.passwordPolicyRepository = passwordPolicyRepository;
-        this.passwordPolicyAttrRepository = passwordPolicyAttrRepository;
     }
 
     /**
@@ -50,7 +54,12 @@ public class PasswordPolicyService {
      * @return password policy entity
      */
     public List<PasswordPolicyEntity> getPasswordPolicies(String enterpriseCode) {
-        return passwordPolicyRepository.findByEnterpriseCode(enterpriseCode);
+        final List<PasswordPolicyEntity> passwordPolicyEntities =
+            passwordPolicyRepository.findByEnterpriseCode(enterpriseCode);
+        if (passwordPolicyEntities.isEmpty()) {
+            throw new EntityNotFoundException("Password policies not found for given enterprise");
+        }
+        return passwordPolicyEntities;
     }
 
     /**
@@ -60,10 +69,7 @@ public class PasswordPolicyService {
      */
     public void activatePasswordPolicy(Long passwordPolicyId) {
         final PasswordPolicyEntity passwordPolicyEntity =
-            passwordPolicyRepository.findById(passwordPolicyId).orElseThrow(() -> {
-                throw new EntityNotFoundException(
-                    PASSWORD_POLICY_NOT_FOUND_FOR_GIVEN_ID + passwordPolicyId);
-            });
+            this.findPasswordPolicyById(passwordPolicyId);
         passwordPolicyEntity.setStatus('A');
         passwordPolicyRepository.save(passwordPolicyEntity);
     }
@@ -75,10 +81,7 @@ public class PasswordPolicyService {
      */
     public void deactivatePasswordPolicy(Long passwordPolicyId) {
         final PasswordPolicyEntity passwordPolicyEntity =
-            passwordPolicyRepository.findById(passwordPolicyId).orElseThrow(() -> {
-                throw new EntityNotFoundException(
-                    PASSWORD_POLICY_NOT_FOUND_FOR_GIVEN_ID + passwordPolicyId);
-            });
+            this.findPasswordPolicyById(passwordPolicyId);
         passwordPolicyEntity.setStatus('D');
         passwordPolicyRepository.save(passwordPolicyEntity);
     }
@@ -90,10 +93,40 @@ public class PasswordPolicyService {
      */
     public void deletePasswordPolicy(Long passwordPolicyId) {
         final PasswordPolicyEntity passwordPolicyEntity =
-            passwordPolicyRepository.findById(passwordPolicyId).orElseThrow(() -> {
-                throw new EntityNotFoundException(
-                    PASSWORD_POLICY_NOT_FOUND_FOR_GIVEN_ID + passwordPolicyId);
-            });
+            this.findPasswordPolicyById(passwordPolicyId);
         passwordPolicyRepository.delete(passwordPolicyEntity);
+    }
+
+    /**
+     * Create password policy.
+     *
+     * @param enterpriseCode   enterprise code
+     * @param passwordPolicies password policies
+     */
+    public void createPasswordPolicy(String enterpriseCode, Map<String, Object> passwordPolicies) {
+        final PasswordPolicyEntity passwordPolicyEntity = new PasswordPolicyEntity();
+        passwordPolicyEntity.setPolicyName((String) passwordPolicies.get(POLICY_NAME));
+        passwordPolicyEntity.setDescription((String) passwordPolicies.get(DESCRIPTION));
+        passwordPolicyEntity.setEnterpriseCode(enterpriseCode);
+        final Set<PasswordPolicyAttrEntity> passwordPolicyAttrEntitySet = new HashSet<>();
+        for (Map.Entry<String, Object> policy : passwordPolicies.entrySet()) {
+            if (policy.getKey().equals(POLICY_NAME) || policy.getKey().equals(DESCRIPTION)) {
+                continue;
+            }
+            final PasswordPolicyAttrEntity passwordPolicyAttr = new PasswordPolicyAttrEntity();
+            passwordPolicyAttr.setAttrName(policy.getKey());
+            passwordPolicyAttr.setAttrValue(policy.getValue().toString());
+            passwordPolicyAttr.setPasswordPolicy(passwordPolicyEntity);
+            passwordPolicyAttrEntitySet.add(passwordPolicyAttr);
+        }
+        passwordPolicyEntity.setPasswordPolicyAttrEntities(passwordPolicyAttrEntitySet);
+        passwordPolicyRepository.save(passwordPolicyEntity);
+    }
+
+    private PasswordPolicyEntity findPasswordPolicyById(Long passwordPolicyId) {
+        return passwordPolicyRepository.findById(passwordPolicyId).orElseThrow(() -> {
+            throw new EntityNotFoundException(
+                PASSWORD_POLICY_NOT_FOUND_FOR_GIVEN_ID + passwordPolicyId);
+        });
     }
 }

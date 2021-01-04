@@ -24,11 +24,17 @@ import org.springframework.stereotype.Service;
  * Enterprise service.
  */
 @Service
+@SuppressWarnings("checkstyle:NeedBraces")
 public class EnterpriseService {
     /**
      * Admin.
      */
     public static final String ADMIN = "ADMIN";
+    /**
+     * Error message when enterprise not found for given id.
+     */
+    public static final String ENTERPRISE_NOT_FOUND_FOR_GIVEN_ID =
+        "Enterprise not found for given id :";
     /**
      * Enterprise repository.
      */
@@ -79,7 +85,7 @@ public class EnterpriseService {
             enterpriseRepository.findByEnterpriseCode(enterpriseCode);
         if (Objects.isNull(enterpriseEntity)) {
             throw new EntityNotFoundException(
-                EnterpriseEntity.class, enterpriseCode);
+                "Enterprise not found for given code");
         }
         final RoleEntity roleEntity = this.roleRepository
             .findByNameAndEnterpriseCode(ADMIN, enterpriseEntity.getEnterpriseCode());
@@ -95,11 +101,7 @@ public class EnterpriseService {
      * @param enterpriseId enterprise id
      */
     public void activateEnterprise(Long enterpriseId) {
-        final EnterpriseEntity enterpriseEntity =
-            enterpriseRepository.findById(enterpriseId).orElseThrow(() -> {
-                return new EntityNotFoundException(
-                    EnterpriseEntity.class, enterpriseId);
-            });
+        final EnterpriseEntity enterpriseEntity = this.findEnterpriseById(enterpriseId);
         enterpriseEntity.setStatus('A');
         enterpriseRepository.save(enterpriseEntity);
     }
@@ -110,11 +112,7 @@ public class EnterpriseService {
      * @param enterpriseId enterprise id
      */
     public void suspendEnterprise(Long enterpriseId) {
-        final EnterpriseEntity enterpriseEntity =
-            enterpriseRepository.findById(enterpriseId).orElseThrow(() -> {
-                return new EntityNotFoundException(
-                    EnterpriseEntity.class, enterpriseId);
-            });
+        final EnterpriseEntity enterpriseEntity = this.findEnterpriseById(enterpriseId);
         enterpriseEntity.setStatus('S');
         enterpriseRepository.save(enterpriseEntity);
     }
@@ -125,12 +123,8 @@ public class EnterpriseService {
      * @param enterpriseId enterprise id
      */
     public void deleteEnterprise(Long enterpriseId) {
-        final EnterpriseEntity enterpriseEntity =
-            enterpriseRepository.findById(enterpriseId).orElseThrow(() -> {
-                return new EntityNotFoundException(
-                    EnterpriseEntity.class, enterpriseId);
-            });
-        enterpriseRepository.deleteById(enterpriseId);
+        final EnterpriseEntity enterpriseEntity = this.findEnterpriseById(enterpriseId);
+        enterpriseRepository.delete(enterpriseEntity);
     }
 
     /**
@@ -160,8 +154,14 @@ public class EnterpriseService {
         final UserEntity savedUserEntity = userRepository.save(userEntity);
 
         final UserRolesEntity userRolesEntity = new UserRolesEntity();
-        userRolesEntity.setUser(userEntity);
+        userRolesEntity.setUser(savedUserEntity);
         userRolesEntity.setRole(savedRoleEntity);
         userRolesRepository.save(userRolesEntity);
+    }
+
+    private EnterpriseEntity findEnterpriseById(Long enterpriseId) {
+        return enterpriseRepository.findById(enterpriseId).orElseThrow(() ->
+            new EntityNotFoundException(
+                ENTERPRISE_NOT_FOUND_FOR_GIVEN_ID + enterpriseId));
     }
 }

@@ -1,4 +1,4 @@
-package com.happiestmind.idm.business.model;
+package com.happiestmind.idm.web.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
@@ -7,34 +7,30 @@ import lombok.Builder;
 import lombok.Getter;
 
 /**
- * Permission model class .
+ * Role basic info.
  */
 @Getter
 @Builder
-@JsonDeserialize(builder = PermissionDto.PermissionBuilder.class)
-public class PermissionDto {
+@JsonDeserialize(builder = RoleBasicInfo.RoleBasicInfoBuilder.class)
+public class RoleBasicInfo {
     /**
      * Id.
      */
     private Long id;
     /**
-     * Name of permission.
+     * Name of the role.
      */
     private String name;
     /**
-     * Description.
-     */
-    private String description;
-    /**
-     * Status.
+     * Description of the role.
      */
     private Character status;
 
     /**
-     * Permission  inner class.
+     * Role basic info Builder inner class.
      */
     @JsonPOJOBuilder(withPrefix = "")
-    public static class PermissionBuilder {
+    public static class RoleBasicInfoBuilder {
 
     }
 }

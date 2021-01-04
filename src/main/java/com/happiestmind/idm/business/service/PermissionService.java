@@ -38,10 +38,8 @@ public class PermissionService {
      * @return all permissions
      */
     public Map<String, List<PermissionEntity>> getAllPermissions() {
-        final Map<String, List<PermissionEntity>> allPermissions =
-            permissionRepository.findAll().stream()
-                .collect(Collectors.groupingBy(PermissionEntity::getFeature));
-        return allPermissions;
+        return permissionRepository.findAll().stream()
+            .collect(Collectors.groupingBy(PermissionEntity::getFeature));
     }
 
     /**
@@ -53,11 +51,11 @@ public class PermissionService {
     public Map<String, List<PermissionEntity>> getPermissionsForGivenFeature(String feature) {
         final List<String> convertedFeatureList = Arrays.asList(feature.split(",", -1));
         final Map<String, List<PermissionEntity>> allPermissions =
-            new HashMap<String, List<PermissionEntity>>();
+            new HashMap<>();
         for (String aFeature : convertedFeatureList) {
             final List<PermissionEntity> permissionEntities =
                 permissionRepository.findByFeature(aFeature);
-            if (permissionEntities.size() == 0) {
+            if (permissionEntities.isEmpty()) {
                 throw new EntityNotFoundException(
                     "Permission entity does not exits for feature " + aFeature);
             }

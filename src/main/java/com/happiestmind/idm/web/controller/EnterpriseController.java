@@ -51,7 +51,7 @@ public class EnterpriseController {
     /**
      * Enterprise transformer.
      */
-    private final EnterpriseTransformer EnterpriseTransformer;
+    private final EnterpriseTransformer enterpriseTransformer;
     /**
      * Response payload transformer.
      */
@@ -70,7 +70,7 @@ public class EnterpriseController {
         com.happiestmind.idm.web.transform.EnterpriseTransformer enterpriseTransformer,
         ResponsePayloadTransformer responsePayloadTransformer) {
         this.enterpriseService = enterpriseService;
-        EnterpriseTransformer = enterpriseTransformer;
+        this.enterpriseTransformer = enterpriseTransformer;
         this.responsePayloadTransformer = responsePayloadTransformer;
     }
 
@@ -84,8 +84,8 @@ public class EnterpriseController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create enterprise")
     @ApiResponses(value = {@ApiResponse(code = CREATED, message = " Created")})
-    public ResponsePayload createEnterprise(@RequestBody
-                                                EnterpriseBasicInfo enterpriseBasicInfo) {
+    public ResponsePayload createEnterprise(
+        @NotNull @RequestBody EnterpriseBasicInfo enterpriseBasicInfo) {
         enterpriseService.createEnterprise(enterpriseBasicInfo);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.CREATED, "Enterprise created successfully");
@@ -100,12 +100,11 @@ public class EnterpriseController {
     @GetMapping("enterprise/{enterpriseCode}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Get enterprise details")
-    @ApiResponses(value = {
-        @ApiResponse(code = SUCCESS, message = "Success|Ok"),
+    @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok"),
         @ApiResponse(code = NOTFOUND, message = "not found")})
     public Enterprise getDetailsOfEnterprise(
-        @PathVariable("enterpriseCode") String enterpriseCode) {
-        return this.EnterpriseTransformer
+        @NotNull @PathVariable("enterpriseCode") String enterpriseCode) {
+        return this.enterpriseTransformer
             .toEnterprise(enterpriseService.getDetailsOfEnterprise(enterpriseCode));
     }
 
@@ -121,7 +120,7 @@ public class EnterpriseController {
     @ApiResponses(value = {
         @ApiResponse(code = SUCCESS, message = "Success|Ok")})
     public ResponsePayload updateStatusOfEnterprise(
-        @PathVariable("enterpriseId") Long enterpriseId) {
+        @NotNull @Positive @PathVariable("enterpriseId") Long enterpriseId) {
         enterpriseService.activateEnterprise(enterpriseId);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.OK, "Enterprise Activated successfully");
@@ -136,10 +135,9 @@ public class EnterpriseController {
     @PutMapping("enterprise/{enterpriseId}/suspend")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Update the status of the enterprise")
-    @ApiResponses(value = {
-        @ApiResponse(code = SUCCESS, message = "Success|Ok")})
+    @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
     public ResponsePayload suspendEnterprise(
-        @PathVariable("enterpriseId") Long enterpriseId) {
+        @NotNull @Positive @PathVariable("enterpriseId") Long enterpriseId) {
         enterpriseService.suspendEnterprise(enterpriseId);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.OK, "Enterprise suspended  successfully");
@@ -155,8 +153,7 @@ public class EnterpriseController {
     @DeleteMapping("enterprise/{id}")
     @ApiOperation(value = "Delete enterprise")
     @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
-    public ResponsePayload deleteEnterprise(
-        @Positive @NotNull @PathVariable("id") Long enterpriseId) {
+    public ResponsePayload deleteEnterprise(@Positive @PathVariable("id") Long enterpriseId) {
         enterpriseService.deleteEnterprise(enterpriseId);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.OK, "Enterprise deleted  successfully");

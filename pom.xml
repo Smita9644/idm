@@ -106,12 +106,6 @@
 			<version>${mockito-core.version}</version>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>com.github.tomakehurst</groupId>-->
-<!--			<artifactId>wiremock</artifactId>-->
-<!--			<version>${wiremock.version}</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -154,14 +148,14 @@
 				</dependencies>
 				<configuration>
 					<configLocation>
-						${pom.basedir}\src\main\resources\checkstyle\checkstyle_checks.xml
+						${project.basedir}\src\main\resources\checkstyle\checkstyle_checks.xml
 					</configLocation>
 					<encoding>UTF-8</encoding>
 					<consoleOutput>true</consoleOutput>
 					<failsOnError>true</failsOnError>
 					<linkXRef>false</linkXRef>
 					<suppressionsLocation>
-						${pom.basedir}\src\main\resources\checkstyle\suppressions.xml
+						${project.basedir}\src\main\resources\checkstyle\suppressions.xml
 					</suppressionsLocation>
 				</configuration>
 				<executions>
@@ -188,5 +182,13 @@
 				</dependencies>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>

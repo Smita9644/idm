@@ -86,8 +86,7 @@ public class RoleController {
     @ApiOperation(value = "Create role")
     @ApiResponses(value = {@ApiResponse(code = CREATED, message = " Created")})
     public ResponsePayload createRole(@PathVariable("enterpriseCode") String enterpriseCode,
-                                      @NotNull @RequestBody
-                                          Role role) {
+                                      @NotNull @RequestBody Role role) {
         roleService.createRole(role, enterpriseCode);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.CREATED, "Role created successfully");
@@ -104,12 +103,10 @@ public class RoleController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Update role")
     @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = " updated")})
-    public ResponsePayload updateRole(@Positive @PathVariable("roleID") Long roleId,
-                                      @NotNull @RequestBody
-                                          Role role) {
+    public ResponsePayload updateRole(@Positive @PathVariable(value = "roleID") Long roleId,
+                                      @NotNull @RequestBody Role role) {
         roleService.updateRole(role, roleId);
-        return responsePayloadTransformer
-            .toResponsePayload(HttpStatus.OK, "Role updated successfully");
+        return responsePayloadTransformer.toResponsePayload(HttpStatus.OK, "Role updated successfully");
     }
 
     /**
@@ -140,12 +137,9 @@ public class RoleController {
     @GetMapping("role/{roleId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Get role for given role id")
-    @ApiResponses(value = {
-        @ApiResponse(code = SUCCESS, message = "Success|Ok")})
-    public RolePermissionsWithFeature getRole(
-        @Positive @PathVariable("roleId") Long roleId) {
-        return rolePermissionTransformer
-            .toRolePermission(roleService.getRoleForGivenId(roleId));
+    @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
+    public RolePermissionsWithFeature getRole(@Positive @PathVariable("roleId") Long roleId) {
+        return rolePermissionTransformer.toRolePermission(roleService.getRoleForGivenId(roleId));
     }
 
     /**
@@ -158,10 +152,8 @@ public class RoleController {
     @DeleteMapping("roles/{roleId}")
     @ApiOperation(value = "Delete role")
     @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
-    public ResponsePayload deleteRole(
-        @Positive @NotNull @PathVariable("roleId") Long roleId) {
+    public ResponsePayload deleteRole(@Positive @NotNull @PathVariable("roleId") Long roleId) {
         roleService.deleteRole(roleId);
-        return responsePayloadTransformer
-            .toResponsePayload(HttpStatus.OK, "Role deleted  successfully");
+        return responsePayloadTransformer.toResponsePayload(HttpStatus.OK, "Role deleted  successfully");
     }
 }

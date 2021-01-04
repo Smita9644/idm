@@ -1,6 +1,5 @@
 package com.happiestmind.idm.web.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,8 +68,7 @@ public class PermissionController {
         @ApiResponse(code = SUCCESS, message = "Success|Ok"),
         @ApiResponse(code = NOTFOUND, message = "not found")})
     public Map<String, List<Permission>> getAllPermissions() {
-        return this.permissionTransform
-            .toAllPermissions(permissionService.getAllPermissions());
+        return this.permissionTransform.toAllPermissions(permissionService.getAllPermissions());
     }
 
     /**
@@ -87,8 +85,6 @@ public class PermissionController {
         @ApiResponse(code = NOTFOUND, message = "not found")})
     public Map<String, List<Permission>> getDetailsOfEnterprise(
         @RequestParam("feature") String feature) {
-        final Map<String, List<Permission>> permissions = new HashMap<>();
-        return this.permissionTransform
-            .toAllPermissions(permissionService.getPermissionsForGivenFeature(feature));
+        return this.permissionTransform.toAllPermissions(permissionService.getPermissionsForGivenFeature(feature));
     }
 }

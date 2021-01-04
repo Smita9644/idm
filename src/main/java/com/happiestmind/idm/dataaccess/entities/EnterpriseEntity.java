@@ -17,255 +17,72 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Enterprise Entity.
  */
 @Entity
 @Table(name = "enterprise", catalog = "idm")
+@Getter
+@Setter
 public class EnterpriseEntity implements java.io.Serializable {
     /**
      * Size for string field.
      */
-    public static final int HUNDRED = 100;
+    private static final int HUNDRED = 100;
     /**
      * Length for date field.
      */
-    public static final int NINETEEN = 19;
+    private static final int NINETEEN = 19;
     /**
      * Length for enterprise code.
      */
-    public static final int FOURTEEN = 14;
+    private static final int FOURTEEN = 14;
     /**
      * Enterprise id.
-     */
-    private Long id;
-    /**
-     * Enterprise name.
-     */
-    private String name;
-    /**
-     * Enterprise status.
-     */
-    private Character status;
-    /**
-     * Code for enterprise.
-     */
-    private String enterpriseCode;
-    /**
-     * Enterprise type.
-     */
-    private int enterpriseType;
-    /**
-     * Created date of enterprise.
-     */
-    private Date createDate;
-    /**
-     * Last updated date of enterprise.
-     */
-    private Date lastUpdateDate;
-    /**
-     * Addresses for the enterprise.
-     */
-    private Set<AddressEntity> addressEntities = new HashSet(0);
-
-    /**
-     * Parameter less constructor.
-     */
-    public EnterpriseEntity() {
-    }
-
-    /**
-     * Parameterised constructor.
-     *
-     * @param enterpriseType enterpriseType
-     * @param createDate     createDate
-     * @param lastUpdateDate lastUpdateDate
-     */
-    public EnterpriseEntity(int enterpriseType, Date createDate, Date lastUpdateDate) {
-        this.enterpriseType = enterpriseType;
-        this.createDate = createDate;
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
-    /**
-     * Parameterised constructor.
-     *
-     * @param name            name
-     * @param status          status
-     * @param enterpriseCode  enterprise code
-     * @param enterpriseType  enterprise type
-     * @param createDate      created date
-     * @param lastUpdateDate  last updated date
-     * @param addressEntities address
-     */
-    @SuppressWarnings("checkstyle:ParameterNumber")
-    public EnterpriseEntity(String name, Character status, String enterpriseCode,
-                            int enterpriseType,
-                            Date createDate,
-                            Date lastUpdateDate, Set<AddressEntity> addressEntities) {
-        this.name = name;
-        this.status = status;
-        this.enterpriseCode = enterpriseCode;
-        this.enterpriseType = enterpriseType;
-        this.createDate = createDate;
-        this.lastUpdateDate = lastUpdateDate;
-        this.addressEntities = addressEntities;
-    }
-
-    /**
-     * Get id of the enterprise.
-     *
-     * @return id of enterprise.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
-
+    private Long id;
     /**
-     * Set id to the enterprise.
-     *
-     * @param id for enterprise.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * Get name of enterprise.
-     *
-     * @return name
+     * Enterprise name.
      */
     @Column(name = "NAME", length = HUNDRED)
-    public String getName() {
-        return this.name;
-    }
-
+    private String name;
     /**
-     * Set name to the enterprise.
-     *
-     * @param name enterprise name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Get status of the enterprise.
-     *
-     * @return status
+     * Enterprise status.
      */
     @Column(name = "STATUS", length = 1)
-    public Character getStatus() {
-        return this.status;
-    }
-
+    private Character status;
     /**
-     * Set Status to enterprise.
-     *
-     * @param status status
-     */
-    public void setStatus(Character status) {
-        this.status = status;
-    }
-
-    /**
-     * Get enterprise code.
-     *
-     * @return enterprise code.
+     * Code for enterprise.
      */
     @Column(name = "ENTERPRISE_CODE", length = FOURTEEN)
-    public String getEnterpriseCode() {
-        return this.enterpriseCode;
-    }
-
+    private String enterpriseCode;
     /**
-     * Set enterprise code.
-     *
-     * @param enterpriseCode enterprise code
-     */
-    public void setEnterpriseCode(String enterpriseCode) {
-        this.enterpriseCode = enterpriseCode;
-    }
-
-    /**
-     * Get enterprise type.
-     *
-     * @return enterprise type
+     * Enterprise type.
      */
     @Column(name = "ENTERPRISE_TYPE", nullable = false)
-    public int getEnterpriseType() {
-        return this.enterpriseType;
-    }
-
-    /**
-     * Set enterprise type.
-     *
-     * @param enterpriseType enterprise type
-     */
-    public void setEnterpriseType(int enterpriseType) {
-        this.enterpriseType = enterpriseType;
-    }
-
+    private int enterpriseType;
     /**
      * Created date of enterprise.
-     *
-     * @return date of creation
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_DATE", nullable = false, length = NINETEEN)
-    public Date getCreateDate() {
-        return this.createDate;
-    }
-
-    /**
-     * Set Created date to enterprise.
-     *
-     * @param createDate date
-     */
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
+    private Date createDate;
     /**
      * Last updated date of enterprise.
-     *
-     * @return date of last updation
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_UPDATE_DATE", nullable = false, length = NINETEEN)
-    public Date getLastUpdateDate() {
-        return this.lastUpdateDate;
-    }
-
+    private Date lastUpdateDate;
     /**
-     * Set last updated date to enterprise.
-     *
-     * @param lastUpdateDate date
-     */
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
-    /**
-     * Get addresses of the enterprise.
-     *
-     * @return list of address.
+     * Addresses for the enterprise.
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "enterprise")
     @JsonIgnore
-    public Set<AddressEntity> getAddressEntities() {
-        return this.addressEntities;
-    }
-
-    /**
-     * Set the address to the Enterprise.
-     *
-     * @param addressEntities addresses
-     */
-    public void setAddressEntities(Set<AddressEntity> addressEntities) {
-        this.addressEntities = addressEntities;
-    }
+    private Set<AddressEntity> addressEntities = new HashSet<>(0);
 }

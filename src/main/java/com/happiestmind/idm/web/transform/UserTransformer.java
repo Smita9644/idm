@@ -8,6 +8,7 @@ import java.util.Set;
 import com.happiestmind.idm.dataaccess.entities.RolePermissionsEntity;
 import com.happiestmind.idm.dataaccess.entities.UserEntity;
 import com.happiestmind.idm.dataaccess.entities.UserRolesEntity;
+import com.happiestmind.idm.web.model.RoleBasicInfo;
 import com.happiestmind.idm.web.model.User;
 
 import org.springframework.stereotype.Component;
@@ -37,7 +38,18 @@ public class UserTransformer {
             .enterpriseCode(userEntity.getEnterpriseCode())
             .roleNames(toRoles(userEntity.getUserRoleEntities()))
             .permissionNames(toPermissions(userEntity.getUserRoleEntities()))
+            .roles(toRolesList(userEntity.getUserRoleEntities()))
             .build();
+    }
+
+    private List<RoleBasicInfo> toRolesList(Set<UserRolesEntity> userRoleEntities) {
+        final List<RoleBasicInfo> roleBasicInfo = new ArrayList<>();
+        for (UserRolesEntity userRolesEntity : userRoleEntities) {
+            roleBasicInfo.add(RoleBasicInfo.builder().id(userRolesEntity.getRole().getId())
+                .name(userRolesEntity.getRole().getName())
+                .status(userRolesEntity.getRole().getStatus()).build());
+        }
+        return roleBasicInfo;
     }
 
     private List<String> toPermissions(Set<UserRolesEntity> userRoleEntities) {

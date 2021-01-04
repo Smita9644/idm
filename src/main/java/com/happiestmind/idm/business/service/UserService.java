@@ -21,7 +21,12 @@ import org.springframework.stereotype.Service;
  * User service.
  */
 @Service
+@SuppressWarnings("checkstyle:NeedBraces")
 public class UserService {
+    /**
+     * Error message for user not found.
+     */
+    public static final String USER_ENTITY_NOT_FOUND_FOR_ID = "User entity not found for id ";
     /**
      * User repository.
      */
@@ -58,11 +63,7 @@ public class UserService {
      * @param userId user id
      */
     public void activateUser(Long userId) {
-        final UserEntity userEntity =
-            userRepository.findById(userId).orElseThrow(() -> {
-                return new EntityNotFoundException(
-                    UserEntity.class, userId);
-            });
+        final UserEntity userEntity = this.findUser(userId);
         userEntity.setStatus('A');
         userRepository.save(userEntity);
     }
@@ -73,11 +74,7 @@ public class UserService {
      * @param userId user id
      */
     public void suspendUser(Long userId) {
-        final UserEntity userEntity =
-            userRepository.findById(userId).orElseThrow(() -> {
-                return new EntityNotFoundException(
-                    UserEntity.class, userId);
-            });
+        final UserEntity userEntity = this.findUser(userId);
         userEntity.setStatus('S');
         userRepository.save(userEntity);
     }
@@ -88,12 +85,8 @@ public class UserService {
      * @param userId user id
      */
     public void deleteUser(Long userId) {
-        final UserEntity userEntity =
-            userRepository.findById(userId).orElseThrow(() -> {
-                return new EntityNotFoundException(
-                    UserEntity.class, userId);
-            });
-        // userRepository.deleteById(userId);
+        final UserEntity userEntity = this.findUser(userId);
+        userRepository.delete(userEntity);
     }
 
     /**
@@ -132,5 +125,21 @@ public class UserService {
             userRolesRepository.save(userRolesEntity);
         }
 
+    }
+
+    /**
+     * Find user by id.
+     *
+     * @param userId user id
+     * @return user entity
+     */
+    public UserEntity findUserDetails(Long userId) {
+        return this.findUser(userId);
+    }
+
+    private UserEntity findUser(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() ->
+            new EntityNotFoundException(
+                USER_ENTITY_NOT_FOUND_FOR_ID + userId));
     }
 }

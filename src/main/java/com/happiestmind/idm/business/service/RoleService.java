@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -72,16 +73,17 @@ public class RoleService {
         roleEntity.setName(role.getName());
         roleEntity.setDescription(role.getDescription());
         roleEntity.setEnterpriseCode(enterpriseCode);
-        roleRepository.save(roleEntity);
-
+        final Set<RolePermissionsEntity> rolePermissionsEntities = new HashSet<>();
         for (Long id : role.getPermissionIds()) {
             final RolePermissionsEntity rolePermissionsEntity = new RolePermissionsEntity();
             rolePermissionsEntity.setRole(roleEntity);
             rolePermissionsEntity.setPermission(permissionRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Permission not found for given id : " + id)
             ));
-            rolePermissionRepository.save(rolePermissionsEntity);
+            rolePermissionsEntities.add(rolePermissionsEntity);
         }
+        roleEntity.setRolePermissionEntities(rolePermissionsEntities);
+        roleRepository.save(roleEntity);
     }
 
     /**
@@ -101,7 +103,7 @@ public class RoleService {
         for (Long id : role.getPermissionIds()) {
             final PermissionEntity permissionEntity = permissionRepository.findById(id).orElseThrow(
                 () -> {
-                    throw new EntityNotFoundException(PermissionEntity.class, id);
+                    throw new EntityNotFoundException("Permission not found for given id " + id);
                 });
             if (
                 Objects.nonNull(rolePermissionRepository
@@ -145,9 +147,8 @@ public class RoleService {
      * @param roleId role id.
      */
     public void deleteRole(Long roleId) {
-        roleRepository.findById(roleId).orElseThrow(() -> {
-            throw new EntityNotFoundException(ROLE_ENTITY_NOT_FOUND_FOR_GIVEN_ID + roleId);
-        });
-        roleRepository.deleteById(roleId);
+        final RoleEntity roleEntity = getRoleForGivenId(roleId);
+        roleRepository.delete(roleEntity);
     }
+
 }

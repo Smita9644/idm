@@ -41,10 +41,6 @@ public class UserController {
      */
     private static final int SUCCESS = 200;
     /**
-     * Not found.
-     */
-    private static final int NOTFOUND = 404;
-    /**
      * Created.
      */
     private static final int CREATED = 201;
@@ -87,8 +83,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create user")
     @ApiResponses(value = {@ApiResponse(code = CREATED, message = " Created")})
-    public ResponsePayload createEnterprise(@RequestBody
-                                                UserRoleInfo userRoleInfo) {
+    public ResponsePayload createEnterprise(@RequestBody UserRoleInfo userRoleInfo) {
         userService.createUser(userRoleInfo);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.CREATED, "User created successfully");
@@ -103,10 +98,8 @@ public class UserController {
     @PutMapping("user/{userId}/activate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Update the status of the user")
-    @ApiResponses(value = {
-        @ApiResponse(code = SUCCESS, message = "Success|Ok")})
-    public ResponsePayload activateUser(
-        @PathVariable("userId") Long userId) {
+    @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
+    public ResponsePayload activateUser(@Positive @PathVariable("userId") Long userId) {
         userService.activateUser(userId);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.OK, "user Activated successfully");
@@ -123,8 +116,7 @@ public class UserController {
     @ApiOperation("Update the status of user")
     @ApiResponses(value = {
         @ApiResponse(code = SUCCESS, message = "Success|Ok")})
-    public ResponsePayload suspendUser(
-        @PathVariable("userId") Long userId) {
+    public ResponsePayload suspendUser(@PathVariable("userId") Long userId) {
         userService.suspendUser(userId);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.OK, "User suspended  successfully");
@@ -140,9 +132,7 @@ public class UserController {
     @DeleteMapping("users/{id}")
     @ApiOperation(value = "Delete user")
     @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
-    public ResponsePayload deleteUser(
-        @Positive @NotNull @PathVariable("id") Long userId) {
-
+    public ResponsePayload deleteUser(@Positive @NotNull @PathVariable("id") Long userId) {
         userService.deleteUser(userId);
         return responsePayloadTransformer
             .toResponsePayload(HttpStatus.OK, "User deleted  successfully");
@@ -156,11 +146,24 @@ public class UserController {
     @GetMapping("/users/list")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Get all users")
-    @ApiResponses(value = {
-        @ApiResponse(code = SUCCESS, message = "Success|Ok")})
+    @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
     public Map<String, List<User>> getDetailsOfEnterprise() {
-        final Map<String, List<User>> users = new HashMap<String, List<User>>();
+        final Map<String, List<User>> users = new HashMap<>();
         users.put("users", userTransformer.toUsers(userService.findAllUsers()));
         return users;
+    }
+
+    /**
+     * Get  users details.
+     *
+     * @param userId user id
+     * @return details of enterprise
+     */
+    @GetMapping("/users/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation("Get all users")
+    @ApiResponses(value = {@ApiResponse(code = SUCCESS, message = "Success|Ok")})
+    public User getUserDetails(@PathVariable("userId") Long userId) {
+        return userTransformer.toUser(userService.findUserDetails(userId));
     }
 }

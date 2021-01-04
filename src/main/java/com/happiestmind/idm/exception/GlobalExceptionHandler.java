@@ -60,7 +60,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleEntityNotFoundException(
         final EntityNotFoundException exception, final HttpServletRequest request) {
-        return new ResponseEntity<>(buildErrorResponse(exception, request), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(buildErrorResponse(exception), HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -74,20 +74,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleRuntimeException(
         final RuntimeException exception,
         final HttpServletRequest request) {
-        return new ResponseEntity<>(buildErrorResponse(exception, request),
+        return new ResponseEntity<>(buildErrorResponse(exception),
             HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private ErrorResponse buildErrorResponse(
-        RuntimeException exception,
-        HttpServletRequest request) {
+        RuntimeException exception) {
         exception.printStackTrace();
         Throwable rootCause = exception;
         while (rootCause.getCause() != null && rootCause.getCause() != rootCause) {
             rootCause = rootCause.getCause();
         }
         final StringBuilder errorMessageBuilder = new StringBuilder(exception.getMessage());
-        if (rootCause != null && !rootCause.equals(exception)) {
+        if (!rootCause.equals(exception)) {
             errorMessageBuilder.append(". Root cause: ");
             errorMessageBuilder.append(rootCause.getMessage());
         }

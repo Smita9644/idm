@@ -49,6 +49,10 @@ public class User {
      */
     private List<String> permissionNames;
     /**
+     * Roles.
+     */
+    private List<RoleBasicInfo> roles;
+    /**
      * User type.
      */
     private int userType;
